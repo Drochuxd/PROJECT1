@@ -1,3 +1,7 @@
+//supplier is not implemented yet, compilation will fail
+//all other classes as of this commit are implemented
+//if the word test is passed when this file is ran a pregenerated series of tests will run to test methods (not implemented yet)
+
 import management.*;
 import java.util.*;
 
@@ -120,6 +124,10 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-        throw new UnsupportedOperationException("main is empty for now"); 
+    	if (args[0] != null && args[0].toLowerCase().equals("test")) {
+            throw new UnsupportedOperationException("pregenerated tests not implemented");
+        }
+        else {
+            throw new UnsupportedOperationException("user-side menu not implemented");
     }
 }
