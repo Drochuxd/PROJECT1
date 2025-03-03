@@ -24,8 +24,26 @@ public class Manager {
         this.currentYear = currentYear;
     }
     
+    private int getMaxDay() { //helper method that returns the highest day in the month
+        if (currentMonth == 2)
+            return 28;
+        else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9 || currentMonth == 11)
+            return 30;
+        else
+            return 31;
+    }
     public void incrementDay() {
-        throw new UnsupportedOperationException("not implemented yet");
+        if (currentDay + 1 > this.getMaxDay()) {
+            if (currentMonth == 12) {
+                this.currentMonth = 1;
+                this.currentYear += 1;
+            }
+            else
+                this.currentMonth += 1;
+            this.currentDay = 1;
+        }
+        else
+            this.currentDay += 1;
     }
     public String generateLowStockReport() {
         throw new UnsupportedOperationException("not implemented yet");
