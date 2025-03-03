@@ -1,9 +1,9 @@
-package Shipment;
+package management;
 
 import java.util.HashMap;
-import Product.*;
+import management.Product;
 
-public class Shipment {
+public class Shipment{
     private int idNumber; 
     private int arrivalMonth;
     private int arrivalDay;

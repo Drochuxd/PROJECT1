@@ -1,4 +1,4 @@
-package Cashier;
+package management;
 
 public class Cashier {
    private String firstName, lastName;

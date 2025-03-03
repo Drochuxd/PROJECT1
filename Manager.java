@@ -1,9 +1,4 @@
-import Cashier.*; 
-import Supplier.*; //supplier doesn't exist yet
-import Shipment.*; 
-import Customer.*;
-import Product.*; 
-import Sale.*;
+import management.*;
 import java.util.*;
 
 public class Manager {
@@ -26,82 +21,82 @@ public class Manager {
     }
     
     public void incrementDay() {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
-    public generateLowStockReport() {
-        throw UnsupportedOperationException("not implemented yet");
+    public String generateLowStockReport() {
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public String[][] getUpcomingShipments(String timeframe) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public String[][] getUpcomingShipments() {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public String receiveShipment(Supplier supplier, int id) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public Product searchInventory(String productName) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void displayInventory(int criteria, boolean toFile) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public String mostSoldItem(String timeframe) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public int numSold(Product product, String timeframe) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public int numSales(String timeframe) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public double averageSalePrice(String timeframe) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void removeProduct(String productName) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void addCashier(String firstName, String lastName, int id, double salary) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void removeCashier(int id) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public Cashier searchCashierByName(String first, String last) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public ArrayList<Cashier> searchCashierByName(String first) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void displayCashiers() {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void addCustomer(String firstName, String lastName, int id, String phoneNumber) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void removeCustomer(int id) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public Customer searchCustomerByName(String first, String last) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void displayCustomers() {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void removeSale(int index) {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     public void displaySales() {
-        throw UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     
     public int getCurrentMonth() {
@@ -125,6 +120,6 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-        //menu work in here
+        throw new UnsupportedOperationException("main is empty for now"); 
     }
 }

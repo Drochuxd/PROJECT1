@@ -1,8 +1,8 @@
-package Sale;
+package management;
 
-import Cashier.*;
-import Customer.*;
-import Product.*;
+import management.Cashier;
+import management.Customer;
+import management.Product;
 import java.util.*;
 
 public class Sale {

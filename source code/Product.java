@@ -1,4 +1,4 @@
-package Product; 
+package management; 
 
 public class Product {
    private String name;

@@ -1,4 +1,4 @@
-package Customer; 
+package management;
 
 public class Customer {
     private String firstName;
