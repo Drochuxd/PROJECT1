@@ -58,7 +58,11 @@ public class Manager {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public Product searchInventory(String productName) {
-        throw new UnsupportedOperationException("not implemented yet");
+        for (String nameOfProduct, Product product : inventory) {
+            if productName.equals(nameOfProduct)
+                return product;
+        }
+        return null; 
     }
     public void displayInventory(int criteria, boolean toFile) {
         throw new UnsupportedOperationException("not implemented yet");
