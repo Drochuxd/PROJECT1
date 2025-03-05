@@ -9,15 +9,9 @@ public class Product {
    
    public Product(String name, double cost, int currentStock, int maxStock) {
       this.name = name;
-      this.cost = cost; 
-      if (currentStock > maxStock) { //exceeding max capacity
-         this.currentStock = maxStock;
-         this.maxStock = maxStock;
-      }
-      else {
-         this.currentStock = currentStock;
-         this.maxStock = maxStock;
-      }
+      this.cost = cost;
+      this.currentStock = currentStock;
+      this.maxStock = maxStock;
       lowPercentage = 20;
    }
    public Product(String name, double cost, int currentStock, int maxStock, int lowPercentage) {
