@@ -31,7 +31,8 @@ public class Shipment{
             return arrivalMonth + "/" + arrivalDay + "/" + arrivalYear;
     }
     //adds product to shipment list, modifies the key if it already exists
-    //If the product already exists in inventory do not need to ask user what the maxStock and lowPercentage are
+    //If the product already exists in inventory do not need to ask user about cost, maxStock, or lowPercentage
+    //The currentStock attribute is used to determine how much of the product is in the shipment
     public void addProduct(String name, double cost, int currentStock, int maxStock, int lowPercentage) {
         Product newProduct = new Product(name, cost, currentStock, maxStock, lowPercentage);
         items.put(newProduct.getName(), newProduct);
@@ -40,6 +41,12 @@ public class Shipment{
     public void removeProduct(String productName) {
         if (items.get(productName) != null)
             items.remove(productName);
+    }
+    public Product searchProduct(String productName) {
+      return items.get(productName);
+    }
+    public int getProductCount(String productName) {
+      return items.get(productName).getCurrentStock();
     }
     
     public int getIdNumber() {
