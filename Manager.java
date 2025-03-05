@@ -59,10 +59,11 @@ public class Manager {
     }
     public Product searchInventory(String productName) {
         for (String nameOfProduct, Product product : inventory) {
-            if productName.equals(nameOfProduct)
+            if productName.equals(nameOfProduct) {
                 return product;
+            }
         }
-        return null; 
+        return null; //Product wasn't found
     }
     public void displayInventory(int criteria, boolean toFile) {
         throw new UnsupportedOperationException("not implemented yet");
