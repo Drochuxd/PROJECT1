@@ -1,4 +1,3 @@
-//supplier is not implemented yet, compilation will fail
 //all other classes as of this commit are implemented
 //if the word test is passed when this file is ran a pregenerated series of tests will run to test methods (not implemented yet)
 
@@ -9,12 +8,12 @@ public class Manager {
     private int currentMonth;
     private int currentDay;
     private int currentYear;
-    private String latestLowStockReport; //most recently generated lowStockReport
+    private String latestLowStockReport = "report not generated yet"; //most recently generated lowStockReport
     private ArrayList<Cashier> cashiers = new ArrayList<>();
     private ArrayList<Supplier> suppliers = new ArrayList<>(); 
-    private HashMap<String, Product> inventory = new HashMap<>();
-    private ArrayList<Integer> inventoryPrice = new ArrayList<>();
-    private ArrayList<Integer> inventoryStock = new ArrayList<>();
+    private ArrayList<Product> inventory = new ArrayList<>();
+    private ArrayList<Integer> inventoryPriceOrder = new ArrayList<>();
+    private ArrayList<Integer> inventoryStockOrder = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Sale> sales = new ArrayList<>();
     
@@ -46,11 +45,25 @@ public class Manager {
             this.currentDay += 1;
     }
     public String generateLowStockReport() {
-        throw new UnsupportedOperationException("not implemented yet");
+        String lowProducts = "";
+        for (Product item : inventory.values()) {
+            if (item.getStockPercentage() <= item.getLowPercentage())
+               lowProducts += item.getName(); 
+        }
+        if (lowProducts.equals("")) {
+            latestLowStockReport = "No low products; 
+            return "No low products";
+        }
+        else {
+            latestLowStockReport = lowProducts;
+            return lowProducts;
+        }
     }
+    //returns upcoming shipments within a certain timeframe
     public String[][] getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    //returns all upcoming shipments
     public String[][] getUpcomingShipments() {
         throw new UnsupportedOperationException("not implemented yet");
     }
@@ -134,6 +147,9 @@ public class Manager {
     }
     public int getCurrentYear() {
         return currentYear; 
+    }
+    public String getLatestLowStockReport() {
+        return latestLowStockReport;
     }
     
     public void setCurrentMonth(int currentMonth) {
