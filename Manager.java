@@ -5,6 +5,7 @@ import management.*;
 import java.util.*;
 
 public class Manager {
+    private Scanner scan = new Scanner (System.in); //scanner for user input when things go wrong in methods
     private int currentMonth;
     private int currentDay;
     private int currentYear;
@@ -87,20 +88,70 @@ public class Manager {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (productName.equals(inventory.get(i).getName())) {
-               throw new UnsupportedOperationException("product names must be unique");
-            }
-        }
         Product newProduct = new Product (productName, cost, currentStock, maxStock, lowPercentage);
-        int productIndex = inventory.size() - 1;
-        if (openInventoryIndices.size() != 0) {
-            productIndex = openInventoryIndices.get(0);
-            openInventoryIndices.remove(0);
-            inventory.set(productIndex, newProduct);
-        }
+        if (inventory.get(productName) != null)  { //key already exists
+            System.out.print("This product already exists, continuing would overwrite this item; continue? [y/n]: ");
+            String response = this.scan.next();
+            if (response.toLowerCase().equals("n")) {
+               System.out.println("Product not successfully added");
+               return;
+            }
+            else { //overwriting an existing item
+               inventory.put(productName, newProduct);
+               //Shift the position of the key in sorted lists to maintain order
+               inventoryPriceOrder.remove(productName);
+               inventoryStockOrder.remove(productName);
+               inventoryAlphabetOrder.remove(productName);
+               int index = 0; 
+               for (int i = 0; i < inventoryPriceOrder.size()-1; i++) { //price order
+                  if (cost > inventory.get(inventoryPriceOrder.get(i)))
+                     index++;
+                  else
+                     break;
+               }
+               inventoryPriceOrder.add(index, productName);
+               index = 0;
+               for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
+                  if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)))
+                     index++;
+                  else
+                     break;
+               }
+               inventoryStockOrder.add(index, productName); 
+               index = 0;
+               for (int i = 0; i < inventoryAlphabetOrder.size() - 1; i++) { //alphabetical order
+                  if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i))) > 0)
+                     index++;
+                  else
+                     break;
+               }
+            }
         else {
-            inventory.add(newProduct); 
+            inventory.put(productName, newProduct);
+            //add new productName to sorted lists in correct spot
+            int index = 0; 
+            for (int i = 0; i < inventoryPriceOrder.size()-1; i++) { //price order
+               if (cost > inventory.get(inventoryPriceOrder.get(i)))
+                  index++;
+               else
+                  break;
+            }
+            inventoryPriceOrder.add(index, productName);
+            index = 0;
+            for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
+               if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)))
+                  index++;
+               else
+                  break;
+            }
+            inventoryStockOrder.add(index, productName); 
+            index = 0;
+            for (int i = 0; i < inventoryAlphabetOrder.size() - 1; i++) { //alphabetical order
+               if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i))) > 0)
+                  index++;
+               else
+                  break;
+            }
         }
     }
     public void removeProduct(String productName) {
@@ -189,7 +240,7 @@ public class Manager {
     	if (args[0] != null && args[0].toLowerCase().equals("test")) {
             throw new UnsupportedOperationException("pregenerated tests not implemented");
         }
-        else {
-            throw new UnsupportedOperationException("user-side menu not implemented");
+      else {
+            throw new UnsupportedOperationException("user-side menu not implemented"); 
     }
 }
