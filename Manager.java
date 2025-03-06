@@ -11,9 +11,10 @@ public class Manager {
     private String latestLowStockReport = "report not generated yet"; //most recently generated lowStockReport
     private ArrayList<Cashier> cashiers = new ArrayList<>();
     private ArrayList<Supplier> suppliers = new ArrayList<>(); 
-    private ArrayList<Product> inventory = new ArrayList<>();
-    private ArrayList<Integer> inventoryPriceOrder = new ArrayList<>();
-    private ArrayList<Integer> inventoryStockOrder = new ArrayList<>();
+    private HashMap<String, Product> inventory = new HashMap<>();
+    private ArrayList<Integer> inventoryPriceOrder = new ArrayList<>(); //keys for prices in ascending (least-greatest)
+    private ArrayList<Integer> inventoryStockOrder = new ArrayList<>(); //keys for stock in ascending
+    private ArrayList<Integer> inventoryAlphabetOrder = new ArrayList<>(); //keys for alphabetical order
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Sale> sales = new ArrayList<>();
     
@@ -51,7 +52,7 @@ public class Manager {
                lowProducts += item.getName(); 
         }
         if (lowProducts.equals("")) {
-            latestLowStockReport = "No low products; 
+            latestLowStockReport = "No low products"; 
             return "No low products";
         }
         else {
@@ -70,6 +71,7 @@ public class Manager {
     public String receiveShipment(Supplier supplier, int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    
     public Product searchInventory(String productName) {
         for (String nameOfProduct, Product product : inventory) {
             if productName.equals(nameOfProduct) {
@@ -78,9 +80,33 @@ public class Manager {
         }
         return null; //Product wasn't found
     }
+    //0 for chronological, 1 for alphabetical, 2 for price descending, 3 for price ascending
+    //4 for percentage stock descending, 5 for percentage stock ascending
+    //make a text file if toFile is true, "Inventory-<MM>-<DD>-<YYYY>.txt"
     public void displayInventory(int criteria, boolean toFile) {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (productName.equals(inventory.get(i).getName())) {
+               throw new UnsupportedOperationException("product names must be unique");
+            }
+        }
+        Product newProduct = new Product (productName, cost, currentStock, maxStock, lowPercentage);
+        int productIndex = inventory.size() - 1;
+        if (openInventoryIndices.size() != 0) {
+            productIndex = openInventoryIndices.get(0);
+            openInventoryIndices.remove(0);
+            inventory.set(productIndex, newProduct);
+        }
+        else {
+            inventory.add(newProduct); 
+        }
+    }
+    public void removeProduct(String productName) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+    
     public String mostSoldItem(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
@@ -93,12 +119,7 @@ public class Manager {
     public double averageSalePrice(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
-    public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
-    public void removeProduct(String productName) {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
+    
     public void addCashier(String firstName, String lastName, int id, double salary) {
         throw new UnsupportedOperationException("not implemented yet");
     }
@@ -114,6 +135,7 @@ public class Manager {
     public void displayCashiers() {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    
     public void addCustomer(String firstName, String lastName, int id, String phoneNumber) {
         throw new UnsupportedOperationException("not implemented yet");
     }
@@ -126,6 +148,7 @@ public class Manager {
     public void displayCustomers() {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
         throw new UnsupportedOperationException("not implemented yet");
     }
