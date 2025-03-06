@@ -74,12 +74,7 @@ public class Manager {
     }
     
     public Product searchInventory(String productName) {
-        for (String nameOfProduct, Product product : inventory) {
-            if productName.equals(nameOfProduct) {
-                return product;
-            }
-        }
-        return null; //Product wasn't found
+        return inventory.get(productName); 
     }
     //0 for chronological, 1 for alphabetical, 2 for price descending, 3 for price ascending
     //4 for percentage stock descending, 5 for percentage stock ascending
