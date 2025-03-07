@@ -72,6 +72,10 @@ public class Manager {
     public String receiveShipment(Supplier supplier, int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
+    //peek at an upcoming shipment from supplier with matching id, return string displaying info about it
+    public String peekShipment(Supplier supplier, int id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
     
     public Product searchInventory(String productName) {
         return inventory.get(productName); 
@@ -203,10 +207,62 @@ public class Manager {
     }
     
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Sale newSale = new Sale (dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
+        String input = "";
+        System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
+        input = scan.nextLine();
+        String curProduct = "oh no"; 
+        String curNumber = "nonono";
+        boolean success = false;
+        while (!(input.toLowerCase().equals("q"))) {
+            curProduct = input.split(":")[0].strip();
+            curNumber = input.split(":")[1].strip();
+            success = this.sellItem(curProduct, Integer.parseInt(curNumber)); //subtracts item from inventory
+            if (success) {
+               newSale.addItem(inventory.get(curProduct));
+            }
+            else {
+               System.out.println("product addition failed: not enough in stock");
+            }
+            System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
+            input = scan.nextLine();
+        }
+        sales.add(0,newSale); 
     }
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Sale newSale = new Sale (dayOfSale, monthOfSale, yearOfSale, managingSale);
+        String input = "";
+        System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
+        input = scan.nextLine();
+        String curProduct = "oh no"; 
+        String curNumber = "nonono";
+        boolean success = false;
+        while (!(input.toLowerCase().equals("q"))) {
+            curProduct = input.split(":")[0].strip();
+            curNumber = input.split(":")[1].strip();
+            success = this.sellItem(curProduct, Integer.parseInt(curNumber)); //subtracts item from inventory
+            if (success) {
+               newSale.addItem(inventory.get(curProduct));
+            }
+            else {
+               System.out.println("product addition failed: not enough in stock");
+            }
+            System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
+            input = scan.nextLine();
+        }
+        sales.add(0,newSale);
+    }
+    //helper for the addSale function, responsible for decrementing products sold from inventory
+    private boolean sellItem(String productName, int numSold) {
+        int productInventory = inventory.get(productName).getCurrentStock();
+        if (productInventory - numSold < 0)
+            return false;
+        else {
+            Product update = inventory.get(productName);
+            update.setCurrentStock(productInventory - numSold);
+            inventory.put(productName, update);
+            return true;
+        }
     }
     public void removeSale(int index) {
         throw new UnsupportedOperationException("not implemented yet");
