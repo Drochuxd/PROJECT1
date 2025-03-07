@@ -13,9 +13,9 @@ public class Manager {
     private ArrayList<Cashier> cashiers = new ArrayList<>();
     private ArrayList<Supplier> suppliers = new ArrayList<>(); 
     private HashMap<String, Product> inventory = new HashMap<>();
-    private ArrayList<Integer> inventoryPriceOrder = new ArrayList<>(); //keys for prices in ascending (least-greatest)
-    private ArrayList<Integer> inventoryStockOrder = new ArrayList<>(); //keys for stock in ascending
-    private ArrayList<Integer> inventoryAlphabetOrder = new ArrayList<>(); //keys for alphabetical order
+    private ArrayList<String> inventoryPriceOrder = new ArrayList<>(); //keys for prices in ascending (least-greatest)
+    private ArrayList<String> inventoryStockOrder = new ArrayList<>(); //keys for stock in ascending
+    private ArrayList<String> inventoryAlphabetOrder = new ArrayList<>(); //keys for alphabetical order
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Sale> sales = new ArrayList<>();
     
@@ -99,7 +99,7 @@ public class Manager {
                inventoryAlphabetOrder.remove(productName);
                int index = 0; 
                for (int i = 0; i < inventoryPriceOrder.size()-1; i++) { //price order
-                  if (cost > inventory.get(inventoryPriceOrder.get(i)))
+                  if (cost > inventory.get(inventoryPriceOrder.get(i)).getCost())
                      index++;
                   else
                      break;
@@ -107,7 +107,7 @@ public class Manager {
                inventoryPriceOrder.add(index, productName);
                index = 0;
                for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
-                  if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)))
+                  if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)).getStockPercentage())
                      index++;
                   else
                      break;
@@ -115,18 +115,19 @@ public class Manager {
                inventoryStockOrder.add(index, productName); 
                index = 0;
                for (int i = 0; i < inventoryAlphabetOrder.size() - 1; i++) { //alphabetical order
-                  if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i))) > 0)
+                  if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i)).getName()) > 0)
                      index++;
                   else
                      break;
                }
             }
+        }
         else {
             inventory.put(productName, newProduct);
             //add new productName to sorted lists in correct spot
             int index = 0; 
             for (int i = 0; i < inventoryPriceOrder.size()-1; i++) { //price order
-               if (cost > inventory.get(inventoryPriceOrder.get(i)))
+               if (cost > inventory.get(inventoryPriceOrder.get(i)).getCost())
                   index++;
                else
                   break;
@@ -134,7 +135,7 @@ public class Manager {
             inventoryPriceOrder.add(index, productName);
             index = 0;
             for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
-               if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)))
+               if (newProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)).getStockPercentage())
                   index++;
                else
                   break;
@@ -142,7 +143,7 @@ public class Manager {
             inventoryStockOrder.add(index, productName); 
             index = 0;
             for (int i = 0; i < inventoryAlphabetOrder.size() - 1; i++) { //alphabetical order
-               if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i))) > 0)
+               if (productName.compareToIgnoreCase(inventory.get(inventoryAlphabetOrder.get(i)).getName()) > 0)
                   index++;
                else
                   break;
@@ -243,5 +244,6 @@ public class Manager {
         }
       else {
             throw new UnsupportedOperationException("user-side menu not implemented"); 
+      }
     }
 }
