@@ -238,8 +238,13 @@ public class Manager {
         this.currentYear = currentYear;
     }
     
+    //run this method on manager object before terminating program
+    public void terminateScanner() {
+       scan.close();
+    }
+    
     public static void main (String[] args) {
-    	if (args[0] != null && args[0].toLowerCase().equals("test")) {
+    	if (args.length != 0 && args[0].toLowerCase().equals("test")) {
             throw new UnsupportedOperationException("pregenerated tests not implemented");
         }
       else {
