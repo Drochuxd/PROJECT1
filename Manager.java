@@ -150,7 +150,13 @@ public class Manager {
         }
     }
     public void removeProduct(String productName) {
-        throw new UnsupportedOperationException("not implemented yet");
+        if (inventory.get(productName) != null) {
+            inventory.remove(productName);
+            System.out.println(productName + " was removed");
+        }
+        else {
+            System.out.println(productName + " does not exist"); 
+        }
     }
     
     public String mostSoldItem(String timeframe) {
