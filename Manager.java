@@ -189,22 +189,36 @@ public class Manager {
     public void removeCashier(int id) {
         Boolean removedCashier = false;
         for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if (cashiers(currentPosition).getIdNumber == id)
+            if (cashiers.get(currentPosition).getIdNumber == id)
                 cashiers.remove(currentPosition)
                 Boolean removedCashier = true;
                 break;
         }
-        if (removedCashier)
+        if (removedCashier) //Print statments to confirm if removeCashier was successful
             System.out.println("Succesfully removed Cashier with id " + id);
         else
             System.out.println("Unable to remove Cashier with id " + id);
     }
+
     public Cashier searchCashierByName(String first, String last) {
-        throw new UnsupportedOperationException("not implemented yet");
+        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
+            if ( (cashiers.get(currentPosition).getFirstName.equalsTo(first)) and (cashiers.get(currentPosition).getLastName.equalsTo(last)) )
+                return cashiers(currentPosition);
+        }
+        System.out.println("Unable to find Cashier " + first + " " + last); //If cashier is not found, null is returned instead
+        return null;
     }
+
     public ArrayList<Cashier> searchCashierByName(String first) {
-        throw new UnsupportedOperationException("not implemented yet");
+        ArrayList<Cashier> cashiersFound = new ArrayList<>();
+        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
+            if (cashiers.get(currentPosition).getFirstName.equalsTo(first))
+                cashiersFound.put(cashiers.get(currentPosition));
+        }
+        return cashiersFound;
+
     }
+
     public void displayCashiers() {
         throw new UnsupportedOperationException("not implemented yet");
     }
