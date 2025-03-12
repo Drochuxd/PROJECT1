@@ -25,6 +25,7 @@ public class Sale {
         this.dayOfSale = dayOfSale;
         this.monthOfSale = monthOfSale;
         this.yearOfSale = yearOfSale;
+        makingSale.incrementPurchase();
     }
     
     public int numberOfProductsSold() {
@@ -133,6 +134,7 @@ public class Sale {
     public static void main (String[] args) {
         Customer testee = new Customer("first", "last", 80, "82-30-89");
         Cashier tester = new Cashier (80, "First", "Last", 800.55);
+        System.out.println("Testee Purchases: " + testee.getPurchasesMade());
         Sale a = new Sale(2, 5, 2025, tester, testee);
         Product banana = new Product ("banana", 3.5, 10, 20);
         Product apple = new Product ("apple", 4.5, 20, 40);
@@ -143,6 +145,7 @@ public class Sale {
         a.addItem(banana);
         a.addItem(apple);
         a.addItem(zeeple);
+        System.out.println("Testee Purchases: " + testee.getPurchasesMade());
         System.out.println(a.saleInfoToStr());
         a.removeItem("zeeple", 3);
         a.removeItem("banana", 1);
