@@ -178,10 +178,26 @@ public class Manager {
     }
     
     public void addCashier(String firstName, String lastName, int id, double salary) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Cashier newCashier = new Cashier(firstName, lastName, id, salary);
+        if (inventory.get(newCashier) != null) //Cashier is already in the database
+            System.out.print("Unable to add Cashier " + firstName ", already in system.");
+        else
+            cashiers.put(newCashier);
+            System.out.print("Successfully added Cashier " + firstName);
     }
+    
     public void removeCashier(int id) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Boolean removedCashier = false;
+        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
+            if (cashiers(currentPosition).getIdNumber == id)
+                cashiers.remove(currentPosition)
+                Boolean removedCashier = true;
+                break;
+        }
+        if (removedCashier)
+            System.out.println("Succesfully removed Cashier with id " + id);
+        else
+            System.out.println("Unable to remove Cashier with id " + id);
     }
     public Cashier searchCashierByName(String first, String last) {
         throw new UnsupportedOperationException("not implemented yet");
