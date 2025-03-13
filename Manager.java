@@ -221,7 +221,7 @@ public class Manager {
 			}
 		}
         if (isInDatabase) { //Cashier is already in the database
-            System.out.println("Unable to add Cashier " + firstName + ", already in system.");
+            System.out.println("Unable to add Cashier " + firstName + " " + lastName + ", already in system.");
 		}
         else {
             cashiers.add(newCashier);
