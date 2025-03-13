@@ -208,11 +208,20 @@ public class Manager {
     
     public void addCashier(String firstName, String lastName, int id, double salary) {
         Cashier newCashier = new Cashier(firstName, lastName, id, salary);
-        if (inventory.get(newCashier) != null) //Cashier is already in the database
-            System.out.print("Unable to add Cashier " + firstName ", already in system.");
-        else
-            cashiers.put(newCashier);
-            System.out.print("Successfully added Cashier " + firstName);
+		boolean isInDatabase = false;
+		for (Cashier cashier : cashiers) {
+			if (cashier.getFirstName().equals(firstName) && cashier.getLastName().equals(lastName)) {
+				isInDatabase = true;
+				break;
+			}
+		}
+        if (isInDatabase) { //Cashier is already in the database
+            System.out.println("Unable to add Cashier " + firstName + ", already in system.");
+		}
+        else {
+            cashiers.add(newCashier);
+            System.out.println("Successfully added Cashier " + firstName + " " + lastName);
+		}
     }
     
     public void removeCashier(int id) {
