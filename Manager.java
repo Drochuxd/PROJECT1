@@ -105,7 +105,6 @@ public class Manager {
     public String peekShipment(Supplier supplier, int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
-    
     public Product searchInventory(String productName) {
         return inventory.get(productName); 
     }
@@ -187,6 +186,9 @@ public class Manager {
         if (inventory.get(productName) != null) {
             inventory.remove(productName);
             System.out.println(productName + " was removed");
+			inventoryPriceOrder.remove(productName);
+			inventoryStockOrder.remove(productName);
+			inventoryAlphabetOrder.remove(productName);
         }
         else {
             System.out.println(productName + " does not exist"); 
