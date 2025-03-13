@@ -10,6 +10,7 @@ public class Manager {
     private int currentDay;
     private int currentYear;
     private String latestLowStockReport = "report not generated yet"; //most recently generated lowStockReport
+	private String latestLowStockReportDate = ""; //date of most recently generated lowStockReport
     private ArrayList<Cashier> cashiers = new ArrayList<>();
     private ArrayList<Supplier> suppliers = new ArrayList<>(); 
     private HashMap<String, Product> inventory = new HashMap<>();
@@ -46,21 +47,49 @@ public class Manager {
         else
             this.currentDay += 1;
     }
+	private String currentDateToStr() { //helper method that returns the date in form mm/dd/yyyy
+        if (currentMonth < 10) { 
+            if (currentDay < 10) 
+                return "0" + currentMonth + "/0" + currentDay + "/" + currentYear;
+            else //just the month needs zero
+                return "0" + currentMonth + "/" + currentDay + "/" + currentYear;
+        }
+        else if (currentDay < 10)
+            return currentMonth + "/0" + currentDay + "/" + currentYear;
+        else
+            return currentMonth + "/" + currentDay + "/" + currentYear;
+    }
     public String generateLowStockReport() {
         String lowProducts = "";
+		latestLowStockReportDate = this.currentDateToStr();
         for (Product item : inventory.values()) {
             if (item.getStockPercentage() <= item.getLowPercentage())
-               lowProducts += item.getName(); 
+               lowProducts += item.getName() + ","; //adds comma to separate
         }
         if (lowProducts.equals("")) {
             latestLowStockReport = "No low products"; 
             return "No low products";
         }
         else {
+			lowProducts = lowProducts.substring(0,lowProducts.length-1); //strip the last comma
             latestLowStockReport = lowProducts;
             return lowProducts;
         }
     }
+	//prints low stock report to terminal
+	public void displayLowStockReport() {
+		if (latestLowStockReportDate.equals("")) {
+			System.out.println("report not generated yet");
+		}
+		else {
+			String[] lowItems = latestLowStockReport.split(",");
+			System.out.println("Date of Report: " + latestLowStockReportDate);
+			for (int i = 1; i <= lowItems.length; i++) {
+				System.out.println(i + ": " + lowItems[i-1] + "| stock: " + 
+				inventory.get(lowItems[i-1]).getCurrentStock() + "/" + inventory.get(lowItems[i-1]).getMaxStock());
+			}
+		}
+	}
     //returns upcoming shipments within a certain timeframe
     public String[][] getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
