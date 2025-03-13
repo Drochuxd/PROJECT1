@@ -2,11 +2,6 @@
 //if the word test is passed when this file is ran a pregenerated series of tests will run to test methods (not implemented yet)
 
 import management.*;
-import source code.Cashier;
-import source code.Customer;
-import source code.Product;
-import source code.Sale;
-
 import java.util.*;
 
 public class Manager {
@@ -230,7 +225,7 @@ public class Manager {
             System.out.println("Successfully added Cashier " + firstName + " " + lastName);
 		}
     }
-    
+	
     public void removeCashier(int id) {
         boolean removedCashier = false;
         for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
@@ -268,28 +263,38 @@ public class Manager {
         System.out.println();
         System.out.println("Cashiers:");
         System.out.println("First Name      Last Name        ID        Salary");
-        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            Cashier currentCashier = cashiers.get(currentPosition);
-            System.out.printf("%-15s %-16s %-9d %.2f", currentCashier.getFirstName. currentCashier.getLastName, currentCashier.getId, currentCashier.getSalary);
+		Cashier currentCashier;
+        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
+            currentCashier = cashiers.get(currentPosition);
+            System.out.printf("%-15s %-16s %-9d %.2f", currentCashier.getFirstName(), currentCashier.getLastName(), currentCashier.getId(), currentCashier.getSalary());
         }
     }
     
     public void addCustomer(String firstName, String lastName, int id, String phoneNumber) {
         Customer newCustomer = new Customer(firstName, lastName, id, phoneNumber);
-        if (customers.contains(newCustomer)) //Customer is already in the database
-            System.out.print("Unable to add Customer " + firstName ", already in system." );
-        else
-            customers.put(newCustomer);
-            System.out.print("Successfully added Customer " + firstName);
+		boolean isInDatabase = false; 
+		for (Customer customer : customers) {
+			if (customer.getFirstName().equals(firstName) && customer.getLastName().equals(lastName)) {
+				isInDatabase = true;
+				break;
+			}
+		}
+        if (isInDatabase) //Customer is already in the database
+            System.out.print("Unable to add Customer " + firstName + " " + lastName + ", already in system." );
+        else {
+            customers.add(newCustomer);
+            System.out.print("Successfully added Customer " + firstName + " " + lastName);
+		}
     }
 
     public void removeCustomer(int id) {
-        Boolean removedCustomer = false;
-        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
-            if (customers.get(currentPosition).getCustomerId == id)
-                customers.remove(currentPosition)
-                Boolean removedCustomer = true;
+        boolean removedCustomer = false;
+        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
+            if (customers.get(currentPosition).getCustomerId() == id) {
+                customers.remove(currentPosition);
+                removedCustomer = true;
                 break;
+			}
         }
         if (removedCustomer) //Print statments to confirm if removeCustomer was successful
             System.out.println("Succesfully removed Customer with id " + id);
@@ -298,9 +303,10 @@ public class Manager {
     }
 
     public Customer searchCustomerByName(String first, String last) {
-        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
+		Customer currentCustomer; 
+        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
             currentCustomer = customers.get(currentPosition);
-            if ( (currentCustomer.getFirstName.equalsTo(first)) and (currentCustomer.getLastName.equalsTo(last)) )
+            if ( (currentCustomer.getFirstName().equals(first)) && (currentCustomer.getLastName().equals(last)) )
                 return currentCustomer;
         }
         System.out.println("Unable to find Customer " + first + " " + last); //If cashier is not found, null is returned instead
@@ -311,9 +317,10 @@ public class Manager {
         System.out.println();
         System.out.println("Customers:");
         System.out.println("First Name      Last Name        ID        Phone Number");
-        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
+        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
             Customer currentCustomer = customers.get(currentPosition);
-            System.out.printf("%-15s %-16s %-9d %s", currentCustomer.getFirstName. currentCustomer.getLastName, currentCustomer.getCustomerId, currentCustomer.getPhoneNumber);
+            System.out.printf("%-15s %-16s %-9d %s", currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getCustomerId(), currentCustomer.getPhoneNumber());
+			System.out.println();
         }
     }
     
@@ -345,7 +352,7 @@ public class Manager {
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
         input = scan.nextLine();
-        String curProduct = "oh no"; 
+        String curProduct = "oh no";
         String curNumber = "nonono";
         boolean success = false;
         while (!(input.toLowerCase().equals("q"))) {
@@ -364,6 +371,7 @@ public class Manager {
         sales.add(0,newSale);
     }
     //helper for the addSale function, responsible for decrementing products sold from inventory
+	//this method needs to update the inventoryStockOrder arrayList because it decrements stock of an item
     private boolean sellItem(String productName, int numSold) {
         int productInventory = inventory.get(productName).getCurrentStock();
         if (productInventory - numSold < 0)
@@ -416,6 +424,6 @@ public class Manager {
         }
       else {
             throw new UnsupportedOperationException("user-side menu not implemented"); 
-      }
+        }
     }
 }
