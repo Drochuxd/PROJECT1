@@ -71,7 +71,7 @@ public class Manager {
             return "No low products";
         }
         else {
-			lowProducts = lowProducts.substring(0,lowProducts.length-1); //strip the last comma
+			lowProducts = lowProducts.substring(0,lowProducts.length()-1); //strip the last comma
             latestLowStockReport = lowProducts;
             return lowProducts;
         }
@@ -207,7 +207,7 @@ public class Manager {
     }
     
     public void addCashier(String firstName, String lastName, int id, double salary) {
-        Cashier newCashier = new Cashier(firstName, lastName, id, salary);
+        Cashier newCashier = new Cashier(id, firstName, lastName, salary);
 		boolean isInDatabase = false;
 		for (Cashier cashier : cashiers) {
 			if (cashier.getFirstName().equals(firstName) && cashier.getLastName().equals(lastName)) {
@@ -227,7 +227,7 @@ public class Manager {
     public void removeCashier(int id) {
         boolean removedCashier = false;
         for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
-            if (cashiers.get(currentPosition).getIdNumber == id) {
+            if (cashiers.get(currentPosition).getId() == id) {
                 cashiers.remove(currentPosition);
                 removedCashier = true;
                 break;
@@ -240,9 +240,9 @@ public class Manager {
     }
 
     public Cashier searchCashierByName(String first, String last) {
-        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if ( (cashiers.get(currentPosition).getFirstName.equalsTo(first)) and (cashiers.get(currentPosition).getLastName.equalsTo(last)) )
-                return cashiers(currentPosition);
+        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
+            if ( (cashiers.get(currentPosition).getFirstName().equals(first)) && (cashiers.get(currentPosition).getLastName().equals(last)) )
+                return cashiers.get(currentPosition);
         }
         System.out.println("Unable to find Cashier " + first + " " + last); //If cashier is not found, null is returned instead
         return null;
@@ -250,12 +250,11 @@ public class Manager {
 
     public ArrayList<Cashier> searchCashierByName(String first) {
         ArrayList<Cashier> cashiersFound = new ArrayList<>();
-        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if (cashiers.get(currentPosition).getFirstName.equalsTo(first))
-                cashiersFound.put(cashiers.get(currentPosition));
+        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
+            if (cashiers.get(currentPosition).getFirstName().equals(first))
+                cashiersFound.add(cashiers.get(currentPosition));
         }
         return cashiersFound;
-
     }
 
     public void displayCashiers() {
