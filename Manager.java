@@ -230,12 +230,13 @@ public class Manager {
     }
     
     public void removeCashier(int id) {
-        Boolean removedCashier = false;
-        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if (cashiers.get(currentPosition).getIdNumber == id)
-                cashiers.remove(currentPosition)
-                Boolean removedCashier = true;
+        boolean removedCashier = false;
+        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
+            if (cashiers.get(currentPosition).getIdNumber == id) {
+                cashiers.remove(currentPosition);
+                removedCashier = true;
                 break;
+			}
         }
         if (removedCashier) //Print statments to confirm if removeCashier was successful
             System.out.println("Succesfully removed Cashier with id " + id);
