@@ -2,6 +2,11 @@
 //if the word test is passed when this file is ran a pregenerated series of tests will run to test methods (not implemented yet)
 
 import management.*;
+import source code.Cashier;
+import source code.Customer;
+import source code.Product;
+import source code.Sale;
+
 import java.util.*;
 
 public class Manager {
@@ -179,8 +184,8 @@ public class Manager {
     
     public void addCashier(String firstName, String lastName, int id, double salary) {
         Cashier newCashier = new Cashier(firstName, lastName, id, salary);
-        if (inventory.get(newCashier) != null) //Cashier is already in the database
-            System.out.print("Unable to add Cashier " + firstName ", already in system.");
+        if (inventory.contains(newCashier)) //Cashier is already in the database
+            System.out.print("Unable to add Cashier " + firstName ", already in system." );
         else
             cashiers.put(newCashier);
             System.out.print("Successfully added Cashier " + firstName);
@@ -202,8 +207,9 @@ public class Manager {
 
     public Cashier searchCashierByName(String first, String last) {
         for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if ( (cashiers.get(currentPosition).getFirstName.equalsTo(first)) and (cashiers.get(currentPosition).getLastName.equalsTo(last)) )
-                return cashiers(currentPosition);
+            currentCashier = cashiers.get(currentPosition);
+            if ( (currentCashier.getFirstName.equalsTo(first)) and (currentCashier.getLastName.equalsTo(last)) )
+                return currentCashier;
         }
         System.out.println("Unable to find Cashier " + first + " " + last); //If cashier is not found, null is returned instead
         return null;
@@ -212,28 +218,64 @@ public class Manager {
     public ArrayList<Cashier> searchCashierByName(String first) {
         ArrayList<Cashier> cashiersFound = new ArrayList<>();
         for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
-            if (cashiers.get(currentPosition).getFirstName.equalsTo(first))
-                cashiersFound.put(cashiers.get(currentPosition));
+            currentCashier = cashiers.get(currentPosition);
+            if ((currentCashier.getFirstName).equalsTo(first))
+                cashiersFound.put(currentCashier);
         }
         return cashiersFound;
-
     }
 
     public void displayCashiers() {
-        throw new UnsupportedOperationException("not implemented yet");
+        System.out.println();
+        System.out.println("Cashiers:");
+        System.out.println("First Name      Last Name        ID        Salary");
+        for (int currentPosition = 0; currentPosition < cashiers.length(); currentPosition++) {
+            Cashier currentCashier = cashiers.get(currentPosition);
+            System.out.printf("%-15s %-16s %-9d %.2f", currentCashier.getFirstName. currentCashier.getLastName, currentCashier.getId, currentCashier.getSalary);
+        }
     }
     
     public void addCustomer(String firstName, String lastName, int id, String phoneNumber) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Customer newCustomer = new Customer(firstName, lastName, id, phoneNumber);
+        if (customers.contains(newCustomer)) //Customer is already in the database
+            System.out.print("Unable to add Customer " + firstName ", already in system." );
+        else
+            customers.put(newCustomer);
+            System.out.print("Successfully added Customer " + firstName);
     }
+
     public void removeCustomer(int id) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Boolean removedCustomer = false;
+        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
+            if (customers.get(currentPosition).getCustomerId == id)
+                customers.remove(currentPosition)
+                Boolean removedCustomer = true;
+                break;
+        }
+        if (removedCustomer) //Print statments to confirm if removeCustomer was successful
+            System.out.println("Succesfully removed Customer with id " + id);
+        else
+            System.out.println("Unable to remove Customer with id " + id);
     }
+
     public Customer searchCustomerByName(String first, String last) {
-        throw new UnsupportedOperationException("not implemented yet");
+        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
+            currentCustomer = customers.get(currentPosition);
+            if ( (currentCustomer.getFirstName.equalsTo(first)) and (currentCustomer.getLastName.equalsTo(last)) )
+                return currentCustomer;
+        }
+        System.out.println("Unable to find Customer " + first + " " + last); //If cashier is not found, null is returned instead
+        return null;
     }
+
     public void displayCustomers() {
-        throw new UnsupportedOperationException("not implemented yet");
+        System.out.println();
+        System.out.println("Customers:");
+        System.out.println("First Name      Last Name        ID        Phone Number");
+        for (int currentPosition = 0; currentPosition < customers.length(); currentPosition++) {
+            Customer currentCustomer = customers.get(currentPosition);
+            System.out.printf("%-15s %-16s %-9d %s", currentCustomer.getFirstName. currentCustomer.getLastName, currentCustomer.getCustomerId, currentCustomer.getPhoneNumber);
+        }
     }
     
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
