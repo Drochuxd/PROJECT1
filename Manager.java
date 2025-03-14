@@ -199,7 +199,53 @@ public class Manager {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public int numSold(String productName, String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+        int count = 0;
+		HashMap<Product, Integer> curProductsSold = new HashMap<>();
+		
+		if (timeframe.equals("month")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentMonth) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (item.getName().equals(productName)) {
+						count += curProductsSold.get(item);
+						break;
+					}
+				}
+			}
+		}
+		else if (timeframe.equals("day")) {
+			for (Sale sale : sales) {
+				if (sale.getDayOfSale() != currentDay) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (item.getName().equals(productName)) {
+						count += curProductsSold.get(item);
+						break;
+					}
+				}
+			}
+		}
+		else if (timeframe.equals("year")) {
+			for (Sale sale : sales) {
+				if (sale.getYearOfSale() != currentYear) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (item.getName().equals(productName)) {
+						count += curProductsSold.get(item);
+						break;
+					}
+				}
+			}
+		}
+		else {
+			System.out.println("invalid timeframe");
+			return -1;
+		}
+		return count;
     }
     public int numSales(String timeframe) {
 		int count = 0;
