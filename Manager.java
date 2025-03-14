@@ -325,12 +325,14 @@ public class Manager {
     }
     
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
-        Sale newSale = new Sale (dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
 		makingSale.incrementPurchase();
+		System.out.print("enter id number for new sale: ");
+		int idNumber = scan.nextInt();
+		Sale newSale = new Sale (idNumber, dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
         input = scan.nextLine();
-        String curProduct = "oh no"; 
+        String curProduct = "oh no";
         String curNumber = "nonono";
         boolean success = false;
         while (!(input.toLowerCase().equals("q"))) {
@@ -346,10 +348,12 @@ public class Manager {
             System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
             input = scan.nextLine();
         }
-        sales.add(0,newSale); 
+        sales.add(0,newSale);
     }
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
-        Sale newSale = new Sale (dayOfSale, monthOfSale, yearOfSale, managingSale);
+        System.out.print("enter id number for new sale: ");
+		int idNumber = scan.nextInt();
+		Sale newSale = new Sale (idNumber, dayOfSale, monthOfSale, yearOfSale, managingSale);
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
         input = scan.nextLine();
