@@ -196,7 +196,73 @@ public class Manager {
     }
     
     public String mostSoldItem(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+        HashMap<Product, Integer> products = new HashMap<>(); //product object is the key, values will be sum total of that product sold
+		HashMap<Product, Integer> curProductsSold = new HashMap<>();
+		
+		if (timeframe.equals("month")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentMonth) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (products.get(item) == null) { //product hasn't been counted yet
+						products.put(item, curProductsSold.get(item));
+					}
+					else { //product is in map already
+						products.put(item, curProductsSold.get(item) + products.get(item));
+					}
+				}
+			}
+		}
+		else if (timeframe.equals("day")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentDay) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (products.get(item) == null) { //product hasn't been counted yet
+						products.put(item, curProductsSold.get(item));
+					}
+					else { //product is in map already
+						products.put(item, curProductsSold.get(item) + products.get(item));
+					}
+				}
+			}
+		}
+		else if (timeframe.equals("year")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentYear) //stop counting
+					break;
+				curProductsSold = sale.getProductsSold();
+				for (Product item : curProductsSold.keySet()) {
+					if (products.get(item) == null) { //product hasn't been counted yet
+						products.put(item, curProductsSold.get(item));
+					}
+					else { //product is in map already
+						products.put(item, curProductsSold.get(item) + products.get(item));
+					}
+				}
+			}
+		}
+		else { //timeframe wasn't entered correctly
+			System.out.println("invalid timeframe");
+			return "error";
+		}
+		if (products.keySet().isEmpty()) { //no sales were counted
+			System.out.println("No products sold within timeframe");
+			return ""; 
+		}
+		else { //normal case, at least one sale so products map is populated
+			String mostSold = "";
+			int largest = -1;
+			for (Product item : products.keySet()) {
+				if (products.get(item) > largest) {
+					largest = products.get(item);
+					mostSold = item.getName();
+				}
+			}
+			return mostSold; 
+		}
     }
     public int numSold(String productName, String timeframe) {
         int count = 0;
