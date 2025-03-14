@@ -198,14 +198,54 @@ public class Manager {
     public String mostSoldItem(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
-    public int numSold(Product product, String timeframe) {
+    public int numSold(String productName, String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public int numSales(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
+	//timeframe is either "month", "day", or "year"
+	//since sales are in reverse chronological order, count sales until the selected timeframe doesn't match respective current
+	//ex. if the timeframe is "day" and the day is 21, then start from the beginning until the day is not 21
     public double averageSalePrice(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+        double sum = 0.0;
+		int count = 0;
+		if (timeframe.equals("month")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentMonth) //stop counting
+					break;
+				sum += sale.totalOfSale();
+				count++;
+			}
+		}
+		else if (timeframe.equals("day")) {
+			for (Sale sale : sales) {
+				if (sale.getDayOfSale() != currentDay) //stop counting
+					break;
+				sum += sale.totalOfSale();
+				count++;
+			}
+		}
+		else if (timeframe.equals("year")) {
+			for (Sale sale : sales) {
+				if (sale.getYearOfSale() != currentYear) //stop counting
+					break;
+				sum += sale.totalOfSale();
+				count++;
+			}
+		}
+		else {
+			System.out.println("invalid timeframe");
+			return -1.0;
+		}
+		
+		if (count == 0) {
+			System.out.println("no sales in timeframe");
+			return 0.0;
+		}
+		else {
+			return (sum / (double)count);
+		}
     }
     
     public void addCashier(String firstName, String lastName, int id, double salary) {
