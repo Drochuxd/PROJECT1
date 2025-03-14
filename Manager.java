@@ -326,6 +326,7 @@ public class Manager {
     
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
         Sale newSale = new Sale (dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
+		makingSale.incrementPurchase();
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
         input = scan.nextLine();
@@ -383,8 +384,19 @@ public class Manager {
             return true;
         }
     }
-    public void removeSale(int index) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public void removeSale(int id) {
+		boolean isRemoved = false;
+        for (int i = 0; i < sales.size(); i++) {
+			if (sales.get(i).getId() == id) {
+				sales.remove(i);
+				isRemoved = true;
+				break;
+			}
+		}
+		if (isRemoved)
+			System.out.println("Sale with id number " + id + " succesfully removed");
+		else
+			System.out.println("Failed to remove sale with id number " + id);
     }
     public void displaySales() {
         throw new UnsupportedOperationException("not implemented yet");

@@ -6,6 +6,7 @@ import management.Product;
 import java.util.*;
 
 public class Sale {
+	private int id; 
     private int dayOfSale;
     private int monthOfSale;
     private int yearOfSale;
@@ -13,19 +14,20 @@ public class Sale {
     private HashMap<Product, Integer> productsSold = new HashMap<>();
     private Customer makingSale;
     
-    public Sale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
-        this.managingSale = managingSale;
+    public Sale(int id, int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
+        this.id = id; 
+		this.managingSale = managingSale;
         this.dayOfSale = dayOfSale;
         this.monthOfSale = monthOfSale;
         this.yearOfSale = yearOfSale;
     }
-    public Sale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
-        this.managingSale = managingSale;
+    public Sale(int id, int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
+        this.id = id;
+		this.managingSale = managingSale;
         this.makingSale = makingSale;
         this.dayOfSale = dayOfSale;
         this.monthOfSale = monthOfSale;
         this.yearOfSale = yearOfSale;
-        makingSale.incrementPurchase();
     }
     
     public int numberOfProductsSold() {
@@ -96,6 +98,9 @@ public class Sale {
             return monthOfSale + "/" + dayOfSale + "/" + yearOfSale;
     }
     
+	public int getId() {
+		return id; 
+	}
     public int getDayOfSale() {
         return dayOfSale;
     }
@@ -114,7 +119,7 @@ public class Sale {
     public Customer getMakingSale() {
         return makingSale;
     }
-    
+	
     public void setDayOfSale(int dayOfSale) {
         this.dayOfSale = dayOfSale;
     }
