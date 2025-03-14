@@ -202,7 +202,33 @@ public class Manager {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public int numSales(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+		int count = 0;
+		if (timeframe.equals("month")) {
+			for (Sale sale : sales) {
+				if (sale.getMonthOfSale() != currentMonth) //stop counting
+					break;
+				count++;
+			}
+		}
+		else if (timeframe.equals("day")) {
+			for (Sale sale : sales) {
+				if (sale.getDayOfSale() != currentDay) //stop counting
+					break;
+				count++;
+			}
+		}
+		else if (timeframe.equals("year")) {
+			for (Sale sale : sales) {
+				if (sale.getYearOfSale() != currentYear) //stop counting
+					break;
+				count++;
+			}
+		}
+		else {
+			System.out.println("invalid timeframe");
+			return -1;
+		}
+		return count;
     }
 	//timeframe is either "month", "day", or "year"
 	//since sales are in reverse chronological order, count sales until the selected timeframe doesn't match respective current
