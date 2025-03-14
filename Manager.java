@@ -15,7 +15,7 @@ public class Manager {
     private ArrayList<Supplier> suppliers = new ArrayList<>(); 
     private HashMap<String, Product> inventory = new HashMap<>();
     private ArrayList<String> inventoryPriceOrder = new ArrayList<>(); //keys for prices in ascending (least-greatest)
-    private ArrayList<String> inventoryStockOrder = new ArrayList<>(); //keys for stock in ascending
+    private ArrayList<String> inventoryStockOrder = new ArrayList<>(); //keys for stock percentage in ascending
     private ArrayList<String> inventoryAlphabetOrder = new ArrayList<>(); //keys for alphabetical order
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Sale> sales = new ArrayList<>();
@@ -385,6 +385,16 @@ public class Manager {
             Product update = inventory.get(productName);
             update.setCurrentStock(productInventory - numSold);
             inventory.put(productName, update);
+			inventoryStockOrder.remove(productName); //removing old placement in stock order
+			boolean placed = false;
+			for (int i = 0; i < inventoryStockOrder.size(); i++) {
+				if (inventory.get(inventoryStockOrder.get(i)).getStockPercentage() >= update.getStockPercentage()) { //place at index i
+					inventoryStockOrder.add(i, productName);
+					placed = true;
+				}
+			}
+			if (!placed)
+				inventoryStockOrder.add(productName); //if the product is the largest value
             return true;
         }
     }
