@@ -623,11 +623,199 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-    	if (args.length != 0 && args[0].toLowerCase().equals("test")) {
-            throw new UnsupportedOperationException("pregenerated tests not implemented");
-        }
-      else {
-            throw new UnsupportedOperationException("user-side menu not implemented"); 
-        }
-    }
-}
+        Scanner scanner = new Scanner(System.in);
+              Manager manager = new Manager(10, 20, 1930);
+      
+              while (true) {
+                  try {
+                      System.out.println("\n Management Menu ");
+                      System.out.println("1. Shipment");
+                      System.out.println("2. Customer");
+                      System.out.println("3. Cashier");
+                      System.out.println("4. Product");
+                      System.out.println("5. Sale");
+                      System.out.println("6. Exit");
+                      System.out.print("choose an option: ");
+      
+                      int choice = scanner.nextInt();
+                      scanner.nextLine(); // Consume newline
+      
+                      switch (choice) {
+                          case 1: // Shipment Menu
+                              while (true) {
+                                  System.out.println("\n shipment menu ");
+                                  System.out.println("1. view upcoming shipments");
+                                  System.out.println("2. receive shipment");
+                                  System.out.println("3. back to main menu");
+                                  System.out.print("choose an option: ");
+      
+                                  int shipmentChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (shipmentChoice == 1) {
+                                      manager.getUpcomingShipments();
+                                  } else if (shipmentChoice == 2) {
+                                      System.out.print("enter supplier name: ");
+                                      String supplierName = scanner.nextLine();
+                                      System.out.print("enter shipment ID: ");
+                                      int shipmentId = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.println(manager.receiveShipment(new Supplier(supplierName), shipmentId));
+                                  } else if (shipmentChoice == 3) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+      
+                          case 2: // Customer Menu
+                              while (true) {
+                                  System.out.println("\n customer menu ");
+                                  System.out.println("1. add customer");
+                                  System.out.println("2. remove customer");
+                                  System.out.println("3. display customers");
+                                  System.out.println("4. back to main menu");
+                                  System.out.print("choose an option: ");
+      
+                                  int customerChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (customerChoice == 1) {
+                                      System.out.print("enter first name: ");
+                                      String first = scanner.nextLine();
+                                      System.out.print("enter last name: ");
+                                      String last = scanner.nextLine();
+                                      System.out.print("enter rewards number: ");
+                                      int rewards = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter phone number: ");
+                                      String phone = scanner.nextLine();
+                                      manager.addCustomer(first, last, rewards, phone);
+                                  } else if (customerChoice == 2) {
+                                      System.out.print("enter rewards number: ");
+                                      int rewards = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.removeCustomer(rewards);
+                                  } else if (customerChoice == 3) {
+                                      manager.displayCustomers();
+                                  } else if (customerChoice == 4) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+      
+                          case 3: // Cashier Menu
+                              while (true) {
+                                  System.out.println("\n cashier menu ");
+                                  System.out.println("1. add cashier");
+                                  System.out.println("2. remove cashier");
+                                  System.out.println("3. display cashiers");
+                                  System.out.println("4. back to main menu");
+                                  System.out.print("choose an option: ");
+      
+                                  int cashierChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (cashierChoice == 1) {
+                                      System.out.print("enter first name: ");
+                                      String first = scanner.nextLine();
+                                      System.out.print("enter last name: ");
+                                      String last = scanner.nextLine();
+                                      System.out.print("enter ID: ");
+                                      int id = scanner.nextInt();
+                                      System.out.print("enter salary: ");
+                                      double salary = scanner.nextDouble();
+                                      scanner.nextLine();
+                                      manager.addCashier(first, last, id, salary);
+                                  } else if (cashierChoice == 2) {
+                                      System.out.print("enter cashier ID: ");
+                                      int id = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.removeCashier(id);
+                                  } else if (cashierChoice == 3) {
+                                      manager.displayCashiers();
+                                  } else if (cashierChoice == 4) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+      
+                          case 4: // Product Menu
+                              while (true) {
+                                  System.out.println("\n product menu ");
+                                  System.out.println("1. generate low stock report");
+                                  System.out.println("2. search inventory");
+                                  System.out.println("3. display inventory");
+                                  System.out.println("4. back to main menu");
+                                  System.out.print("choose an option: ");
+      
+                                  int productChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (productChoice == 1) {
+                                      manager.generateLowStockReport();
+                                  } else if (productChoice == 2) {
+                                      System.out.print("enter product name: ");
+                                      String productName = scanner.nextLine();
+                                      manager.searchInventory(productName);
+                                  } /*else if (productChoice == 3) {
+                                      manager.displayInventory();
+                                      
+                                 } */else if (productChoice == 4) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+      
+                          case 5: // Sale Menu
+                              while (true) {
+                                  System.out.println("\n sale menu ");
+                                  System.out.println("1. most sold item");
+                                  System.out.println("2. number of sales");
+                                  System.out.println("3. display sales");
+                                  System.out.println("4. back to main menu");
+                                  System.out.print("Choose an option: ");
+      
+                                  int saleChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (saleChoice == 1) {
+                                      System.out.print("enter timeframe day month year: ");
+                                      String timeframe = scanner.nextLine();
+                                      System.out.println("most S=sold item: " + manager.mostSoldItem(timeframe));
+                                  } else if (saleChoice == 2) {
+                                      System.out.print("enter timeframe day month year: ");
+                                      String timeframe = scanner.nextLine();
+                                      System.out.println("number of sales: " + manager.numSales(timeframe));
+                                  } else if (saleChoice == 3) {
+                                      manager.displaySales();
+                                  } else if (saleChoice == 4) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+      
+                          case 6: // Exit
+                              System.out.println("done");
+                              scanner.close();
+                              manager.terminateScanner();
+                              return;
+      
+                          default:
+                              System.out.println("Invalid option. Please enter a number between 1 and 6.");
+                      }
+                  } catch (Exception e) {
+                      System.out.println("Invalid input! Please enter a valid number.");
+                      scanner.nextLine(); // Clear invalid input
+                  }
+              }
+          }}
