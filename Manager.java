@@ -112,23 +112,44 @@ public class Manager {
     public Product searchInventory(String productName) {
         return inventory.get(productName); 
     }
-    //0 for chronological, 1 for alphabetical, 2 for price descending, 3 for price ascending
+    //1 for alphabetical, 2 for price descending, 3 for price ascending
     //4 for percentage stock descending, 5 for percentage stock ascending
-    //make a text file if toFile is true, "Inventory-<MM>-<DD>-<YYYY>.txt"
     public void displayInventory(int criteria) {
+		Product curProduct;
         switch (criteria) {
-			case 0: //chronological order
-				//
 			case 1: //alphabetical order
-				//
+				for (int i = 0; i < inventoryAlphabetOrder.size(); i++) {
+					curProduct = inventory.get(inventoryAlphabetOrder.get(i));
+					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+				}
+				break;
 			case 2: //price descending
-				//
+				for (int i = inventoryPriceOrder.size()-1; i >= 0; i--) {
+					curProduct = inventory.get(inventoryPriceOrder.get(i));
+					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+				}
+				break;
 			case 3: //price ascending
-				//
+				for (int i = 0; i < inventoryPriceOrder.size(); i++) {
+					curProduct = inventory.get(inventoryPriceOrder.get(i));
+					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+				}
+				break;
 			case 4: //percentage stock descending
-				//
+				for (int i = inventoryStockOrder.size()-1; i >= 0; i--) {
+					curProduct = inventory.get(inventoryStockOrder.get(i));
+					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+				}
+				break;
 			case 5: //percentage stock ascending
-				//
+				for (int i = 0; i < inventoryStockOrder.size(); i++) {
+					curProduct = inventory.get(inventoryStockOrder.get(i));
+					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+				}
+				break;
+			default:
+				System.out.println("invalid criteria input to displayInventory method");
+				return;
 		}
     }
     public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
