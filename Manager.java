@@ -91,11 +91,11 @@ public class Manager {
 		}
 	}
     //returns upcoming shipments within a certain timeframe
-    public String[][] getUpcomingShipments(String timeframe) {
+    public String getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     //returns all upcoming shipments
-    public String[][] getUpcomingShipments() {
+    public String getUpcomingShipments() {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public String receiveShipment(String supplierName, int id) {
