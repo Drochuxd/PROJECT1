@@ -115,8 +115,21 @@ public class Manager {
     //0 for chronological, 1 for alphabetical, 2 for price descending, 3 for price ascending
     //4 for percentage stock descending, 5 for percentage stock ascending
     //make a text file if toFile is true, "Inventory-<MM>-<DD>-<YYYY>.txt"
-    public void displayInventory(int criteria, boolean toFile) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public void displayInventory(int criteria) {
+        switch (criteria) {
+			case 0: //chronological order
+				//
+			case 1: //alphabetical order
+				//
+			case 2: //price descending
+				//
+			case 3: //price ascending
+				//
+			case 4: //percentage stock descending
+				//
+			case 5: //percentage stock ascending
+				//
+		}
     }
     public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
         Product newProduct = new Product (productName, cost, currentStock, maxStock, lowPercentage);
@@ -531,6 +544,10 @@ public class Manager {
 	}
 	
 	public Supplier searchSupplierByName(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void displaySuppliers() {
 		throw new UnsupportedOperationException("not implemented yet");
 	}
 	
