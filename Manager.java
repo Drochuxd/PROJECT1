@@ -741,7 +741,6 @@ public class Manager {
     
     public static void main (String[] args) {
     ArrayList<Shipment> shipments =  new ArrayList<Shipment>();
-    ArrayList<Product> products =  new ArrayList<Product>();
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(10, 20, 1930);
       
@@ -753,7 +752,8 @@ public class Manager {
                       System.out.println("3. Cashier");
                       System.out.println("4. Product");
                       System.out.println("5. Sale");
-                      System.out.println("6. Exit");
+                      System.out.println("6. Supplier");
+                      System.out.println("7. Exit");
                       System.out.print("choose an option: ");
       
                       int choice = scanner.nextInt();
@@ -922,14 +922,14 @@ public class Manager {
                                       int maxStock = scanner.nextInt();
                                       System.out.print("enter lowPercentage: ");
                                       int lowPercentage = scanner.nextInt();
-
-                                      products.add(new Product(name, cost, currentStock, maxStock, lowPercentage));
+                                      manager.addProduct(productName, cost, currentStock, maxStock, lowPercentage);
                                   }else if (productChoice == 5) {
                                       //remove shipment
-                                      System.out.print("enter id: ");
-                                      String name = scanner.nextLine();
-                                      for(int i=0; i < products.size(); i++)
-                                      if (name.equals(products.get(i).getName())) products.remove(i);
+                                      System.out.print("enter product name: ");
+                                      String productName = scanner.nextLine();
+                                      manager.removeProduct(productName);
+                                  }else if (productChoice == 6){
+                                      break;
                                   }else {
                                       System.out.println("invalid option.");
                                   }
@@ -939,26 +939,73 @@ public class Manager {
                           case 5: // Sale Menu
                               while (true) {
                                   System.out.println("\n sale menu ");
-                                  System.out.println("1. most sold item");
-                                  System.out.println("2. number of sales");
-                                  System.out.println("3. display sales");
-                                  System.out.println("4. back to main menu");
+                                  System.out.println("1. add sold item");
+                                  System.out.println("2. most sold item");
+                                  System.out.println("3. number of sales");
+                                  System.out.println("4. display sales");
+                                  System.out.println("5. back to main menu");
                                   System.out.print("Choose an option: ");
       
                                   int saleChoice = scanner.nextInt();
                                   scanner.nextLine();
       
                                   if (saleChoice == 1) {
+                                      System.out.print("enter dayOfSale: ");
+                                      int dayOfSale = scanner.nextLine();
+                                      System.out.print("enter monthOfSale: ");
+                                      int monthOfSale = scanner.nextDouble();
+                                      System.out.print("enter yearOfSale: ");
+                                      int yearOfSale = scanner.nextInt();
+                                      System.out.print("enter cashier first: ");
+                                      String cashierFirst = scanner.nextLine();
+                                      System.out.print("enter cashier last: ");
+                                      String cashierLast = scanner.nextLine();
+                                      System.out.print("enter Customer first: ");
+                                      String customerFirst = scanner.nextLine();
+                                      System.out.print("enter Customer last: ");
+                                      String customerLast = scanner.nextLine();
+                                      Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
+                                      Customer makingSale = manager.searchcustomerByName(customerFirst, customerLast).get(0);
+                                      manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
+                                 } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();
                                       System.out.println("most S=sold item: " + manager.mostSoldItem(timeframe));
-                                  } else if (saleChoice == 2) {
+                                  } else if (saleChoice == 3) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();
                                       System.out.println("number of sales: " + manager.numSales(timeframe));
-                                  } else if (saleChoice == 3) {
-                                      manager.displaySales();
                                   } else if (saleChoice == 4) {
+                                      manager.displaySales();
+                                  } else if (saleChoice == 5) {
+                                      break;
+                                  } else {
+                                      System.out.println("invalid option.");
+                                  }
+                              }
+                              break;
+                          case 6: // Supplier Menu
+                              while (true) {
+                                  System.out.println("\n supplier menu ");
+                                  System.out.println("1. add supplier");
+                                  System.out.println("2. remove supplier");
+                                  System.out.println("3. search supplier");
+                                  System.out.println("4. display Suppliers");
+                                  System.out.println("5. back to main menu");
+                                  System.out.print("Choose an option: ");
+      
+                                  int saleChoice = scanner.nextInt();
+                                  scanner.nextLine();
+      
+                                  if (saleChoice == 1) {
+                                      manager.addSuppliers();
+                                  } else if (saleChoice == 2) {
+                                      manager.removeSuppliers();
+                                  } else if (saleChoice == 3) {
+                                      manager.searchSuppliers();
+                                  } else if (saleChoice == 4) {
+                                      manager.displaySuppliers();
+                                  }else if (saleChoice == 5) {
                                       break;
                                   } else {
                                       System.out.println("invalid option.");
@@ -966,7 +1013,7 @@ public class Manager {
                               }
                               break;
       
-                          case 6: // Exit
+                          case 7: // Exit
                               System.out.println("done");
                               scanner.close();
                               manager.terminateScanner();
