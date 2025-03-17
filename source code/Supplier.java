@@ -61,6 +61,14 @@ public class Supplier {
       upcomingShipments.remove(id);
  }
  
+ public Shipment getShipment(int id) {
+	 if (upcomingShipments.get(id) != null) {
+		 return upcomingShipments.get(id);
+	 }
+	 else {
+		 return null;
+	 }
+ 
  public HashMap<Integer, Shipment> getAllShipments() {
 	 return upcomingShipments;
  }
