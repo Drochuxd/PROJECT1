@@ -60,6 +60,10 @@ public class Supplier {
   public void removeShipment(int id){ //removes a shipment by its id, does nothing if it doesn’t exist 
       upcomingShipments.remove(id);
  }
+ 
+ public HashMap<Integer, Shipment> getAllShipments() {
+	 return upcomingShipments;
+ }
    
   public void addProduct(String name, double cost, int currentStock, int maxStock, int lowPercentage) {
         Product newProduct = new Product(name, cost, currentStock, maxStock, lowPercentage);
