@@ -432,13 +432,13 @@ public class Manager {
         }
     }
 
-    public Cashier searchCashierByName(String first, String last) {
+    public ArrayList<Cashier> searchCashierByName(String first, String last) {
+        ArrayList<Cashier> cashiersFound = new ArrayList<>();
         for (int id : cashiers.keySet()) {
             if ( (cashiers.get(id).getFirstName().equals(first)) && (cashiers.get(id).getLastName().equals(last)) )
-                return cashiers.get(id);
+                cashiersFound.add(cashiers.get(id));
         }
-        System.out.println("Unable to find Cashier " + first + " " + last); //If cashier is not found, null is returned instead
-        return null;
+        return cashiersFound;
     }
 
     public ArrayList<Cashier> searchCashierByName(String first) {
@@ -493,15 +493,15 @@ public class Manager {
         }
     }
 
-    public Customer searchCustomerByName(String first, String last) {
-		Customer currentCustomer; 
+    public ArrayList<Customer> searchCustomerByName(String first, String last) {
+		ArrayList<Customer> customersFound = new ArrayList<>();
+        Customer currentCustomer; 
         for (int id : customers.keySet()) {
             currentCustomer = customers.get(id);
             if ( (currentCustomer.getFirstName().equals(first)) && (currentCustomer.getLastName().equals(last)) )
-                return currentCustomer;
+                customersFound.add(currentCustomer);
         }
-        System.out.println("Unable to find Customer " + first + " " + last); //If cashier is not found, null is returned instead
-        return null;
+        return customersFound;
     }
 	
 	public ArrayList<Customer> searchCustomerByName(String first) {
