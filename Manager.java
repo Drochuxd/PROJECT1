@@ -472,7 +472,14 @@ public class Manager {
     }
 
 	public Cashier searchCashierById (int id) {
-		throw new UnsupportedOperationException("not implemented yet");
+		Cashier currentCashier; 
+        for (int loopId : cashiers.keySet()) {
+            currentCashier = cashiers.get(loopId);
+            if ( currentCashier.getId() == id )
+                return currentCashier;
+        }
+        System.out.println("Unable to find Customer with Id " + id); //Customer cannot be found, returning null
+        return null;
 	}
 	
     public void displayCashiers() {
@@ -526,11 +533,25 @@ public class Manager {
     }
 	
 	public ArrayList<Customer> searchCustomerByName(String first) {
-		throw new UnsupportedOperationException ("Not implemented yet");
+		ArrayList<Customer> customersFound = new ArrayList<>();
+        Customer currentCustomer; 
+        for (int id : customers.keySet()) {
+            currentCustomer = customers.get(id);
+            if ( (currentCustomer.getFirstName().equals(first)) )
+                customersFound.add(currentCustomer);
+        }
+        return customersFound;
 	}
 	
 	public Customer searchCustomerById (int id) {
-		throw new UnsupportedOperationException("not implemented yet");
+        Customer currentCustomer; 
+        for (int loopId : customers.keySet()) {
+            currentCustomer = customers.get(loopId);
+            if ( currentCustomer.getCustomerId() == id )
+                return currentCustomer;
+        }
+        System.out.println("Unable to find Customer with Id " + id); //Customer cannot be found, returning null
+        return null;
 	}
 	
     public void displayCustomers() {
