@@ -91,18 +91,22 @@ public class Manager {
 		}
 	}
     //returns upcoming shipments within a certain timeframe
-    public String[][] getUpcomingShipments(String timeframe) {
+    public String getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     //returns all upcoming shipments
-    public String[][] getUpcomingShipments() {
+    public String getUpcomingShipments() {
         throw new UnsupportedOperationException("not implemented yet");
     }
-    public String receiveShipment(Supplier supplier, int id) {
+    public String receiveShipment(String supplierName, int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     //peek at an upcoming shipment from supplier with matching id, return string displaying info about it
-    public String peekShipment(Supplier supplier, int id) {
+    public String peekShipment(String supplierName, int id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+	//peek at all shipments from a specified supplier
+	public String peekShipments(String supplierName) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public Product searchInventory(String productName) {
@@ -111,8 +115,21 @@ public class Manager {
     //0 for chronological, 1 for alphabetical, 2 for price descending, 3 for price ascending
     //4 for percentage stock descending, 5 for percentage stock ascending
     //make a text file if toFile is true, "Inventory-<MM>-<DD>-<YYYY>.txt"
-    public void displayInventory(int criteria, boolean toFile) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public void displayInventory(int criteria) {
+        switch (criteria) {
+			case 0: //chronological order
+				//
+			case 1: //alphabetical order
+				//
+			case 2: //price descending
+				//
+			case 3: //price ascending
+				//
+			case 4: //percentage stock descending
+				//
+			case 5: //percentage stock ascending
+				//
+		}
     }
     public void addProduct(String productName, double cost, int currentStock, int maxStock, int lowPercentage) {
         Product newProduct = new Product (productName, cost, currentStock, maxStock, lowPercentage);
@@ -433,6 +450,10 @@ public class Manager {
         return cashiersFound;
     }
 
+	public Cashier searchCashierById (int id) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
     public void displayCashiers() {
         System.out.println();
         System.out.println("Cashiers:");
@@ -482,7 +503,15 @@ public class Manager {
         System.out.println("Unable to find Customer " + first + " " + last); //If cashier is not found, null is returned instead
         return null;
     }
-
+	
+	public ArrayList<Customer> searchCustomerByName(String first) {
+		throw new UnsupportedOperationException ("Not implemented yet");
+	}
+	
+	public Customer searchCustomerById (int id) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
     public void displayCustomers() {
         System.out.println();
         System.out.println("Customers:");
@@ -494,6 +523,27 @@ public class Manager {
         }
     }
     
+	public void addSupplier(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void modifySupplier (String oldName, String newName) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void removeSupplier(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public Supplier searchSupplierByName(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void displaySuppliers() {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
 		makingSale.incrementPurchase();
 		System.out.print("enter id number for new sale: ");
@@ -615,8 +665,8 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-    ArrayList[]<Shipment> shipments =  new ArrayList<Shipment>();
-    ArrayList[]<Product> products =  new ArrayList<Product>();
+    ArrayList<Shipment> shipments =  new ArrayList<Shipment>();
+    ArrayList<Product> products =  new ArrayList<Product>();
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(10, 20, 1930);
       
@@ -674,9 +724,9 @@ public class Manager {
                                   }else if (shipmentChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
-                                      int id = scanner.nextLine();
-                                      for(int i=0; i < shipments.length; i++)
-                                      if (id.equils(shipments.get(i).getIdNumber())) shipments.remove(i);
+                                      int id = scanner.nextInt();
+                                      for(int i=0; i < shipments.size(); i++)
+                                      if (id == (shipments.get(i).getIdNumber())) shipments.remove(i);
                                   }else if (shipmentChoice == 6) {
                                       break;
                                  
@@ -802,9 +852,9 @@ public class Manager {
                                   }else if (productChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
-                                      int name = scanner.nextLine();
-                                      for(int i=0; i < shipment.length; i++)
-                                      if (name.equils(products.get(name).getName())) products.remove(i);
+                                      String name = scanner.nextLine();
+                                      for(int i=0; i < products.size(); i++)
+                                      if (name.equals(products.get(i).getName())) products.remove(i);
                                   }else {
                                       System.out.println("invalid option.");
                                   }
