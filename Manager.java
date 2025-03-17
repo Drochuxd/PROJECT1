@@ -11,13 +11,13 @@ public class Manager {
     private int currentYear;
     private String latestLowStockReport = "report not generated yet"; //most recently generated lowStockReport
 	private String latestLowStockReportDate = ""; //date of most recently generated lowStockReport
-    private ArrayList<Cashier> cashiers = new ArrayList<>();
-    private ArrayList<Supplier> suppliers = new ArrayList<>(); 
+    private HashMap<Integer, Cashier> cashiers = new HashMap<>(); //Key id
+    private HashMap<String, Supplier> suppliers = new HashMap<>(); //Key supplierName
     private HashMap<String, Product> inventory = new HashMap<>();
     private ArrayList<String> inventoryPriceOrder = new ArrayList<>(); //keys for prices in ascending (least-greatest)
     private ArrayList<String> inventoryStockOrder = new ArrayList<>(); //keys for stock percentage in ascending
     private ArrayList<String> inventoryAlphabetOrder = new ArrayList<>(); //keys for alphabetical order
-    private ArrayList<Customer> customers = new ArrayList<>();
+    private HashMap<Integer, Customer> customers = new HashMap<>(); //Key customerId
     private ArrayList<Sale> sales = new ArrayList<>();
     
     public Manager (int currentMonth, int currentDay, int currentYear) {
@@ -389,8 +389,9 @@ public class Manager {
     public void addCashier(String firstName, String lastName, int id, double salary) {
         Cashier newCashier = new Cashier(id, firstName, lastName, salary);
 		boolean isInDatabase = false;
-		for (Cashier cashier : cashiers) {
-			if (cashier.getFirstName().equals(firstName) && cashier.getLastName().equals(lastName)) {
+		for (int loopId : cashiers.keySet()) {
+			Cashier currentCashier = cashiers.get(loopId);
+            if (currentCashier.getFirstName().equals(firstName) && currentCashier.getLastName().equals(lastName)) {
 				isInDatabase = true;
 				break;
 			}
@@ -399,30 +400,25 @@ public class Manager {
             System.out.println("Unable to add Cashier " + firstName + " " + lastName + ", already in system.");
 		}
         else {
-            cashiers.add(newCashier);
+            cashiers.put(id, newCashier);
             System.out.println("Successfully added Cashier " + firstName + " " + lastName);
 		}
     }
 	
     public void removeCashier(int id) {
-        boolean removedCashier = false;
-        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
-            if (cashiers.get(currentPosition).getId() == id) {
-                cashiers.remove(currentPosition);
-                removedCashier = true;
-                break;
-			}
-        }
-        if (removedCashier) //Print statments to confirm if removeCashier was successful
+        try {
+            cashiers.remove(id);
             System.out.println("Succesfully removed Cashier with id " + id);
-        else
+        }
+        catch(Exception e) {
             System.out.println("Unable to remove Cashier with id " + id);
+        }
     }
 
     public Cashier searchCashierByName(String first, String last) {
-        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
-            if ( (cashiers.get(currentPosition).getFirstName().equals(first)) && (cashiers.get(currentPosition).getLastName().equals(last)) )
-                return cashiers.get(currentPosition);
+        for (int id : cashiers.keySet()) {
+            if ( (cashiers.get(id).getFirstName().equals(first)) && (cashiers.get(id).getLastName().equals(last)) )
+                return cashiers.get(id);
         }
         System.out.println("Unable to find Cashier " + first + " " + last); //If cashier is not found, null is returned instead
         return null;
@@ -430,9 +426,9 @@ public class Manager {
 
     public ArrayList<Cashier> searchCashierByName(String first) {
         ArrayList<Cashier> cashiersFound = new ArrayList<>();
-        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
-            if (cashiers.get(currentPosition).getFirstName().equals(first))
-                cashiersFound.add(cashiers.get(currentPosition));
+        for (int id : cashiers.keySet()) {
+            if (cashiers.get(id).getFirstName().equals(first))
+                cashiersFound.add(cashiers.get(id));
         }
         return cashiersFound;
     }
@@ -442,8 +438,8 @@ public class Manager {
         System.out.println("Cashiers:");
         System.out.println("First Name      Last Name        ID        Salary");
 		Cashier currentCashier;
-        for (int currentPosition = 0; currentPosition < cashiers.size(); currentPosition++) {
-            currentCashier = cashiers.get(currentPosition);
+        for (int id : cashiers.keySet()) {
+            currentCashier = cashiers.get(id);
             System.out.printf("%-15s %-16s %-9d %.2f", currentCashier.getFirstName(), currentCashier.getLastName(), currentCashier.getId(), currentCashier.getSalary());
         }
     }
@@ -451,8 +447,9 @@ public class Manager {
     public void addCustomer(String firstName, String lastName, int id, String phoneNumber) {
         Customer newCustomer = new Customer(firstName, lastName, id, phoneNumber);
 		boolean isInDatabase = false; 
-		for (Customer customer : customers) {
-			if (customer.getFirstName().equals(firstName) && customer.getLastName().equals(lastName)) {
+		for (int loopId : customers.keySet()) {
+			Customer currentCustomer = customers.get(loopId);
+            if (currentCustomer.getFirstName().equals(firstName) && currentCustomer.getLastName().equals(lastName)) {
 				isInDatabase = true;
 				break;
 			}
@@ -460,30 +457,25 @@ public class Manager {
         if (isInDatabase) //Customer is already in the database
             System.out.print("Unable to add Customer " + firstName + " " + lastName + ", already in system." );
         else {
-            customers.add(newCustomer);
+            customers.put(id, newCustomer);
             System.out.print("Successfully added Customer " + firstName + " " + lastName);
 		}
     }
 
     public void removeCustomer(int id) {
-        boolean removedCustomer = false;
-        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
-            if (customers.get(currentPosition).getCustomerId() == id) {
-                customers.remove(currentPosition);
-                removedCustomer = true;
-                break;
-			}
-        }
-        if (removedCustomer) //Print statments to confirm if removeCustomer was successful
+        try {
+            customers.remove(id);
             System.out.println("Succesfully removed Customer with id " + id);
-        else
+        }
+        catch(Exception e) {
             System.out.println("Unable to remove Customer with id " + id);
+        }
     }
 
     public Customer searchCustomerByName(String first, String last) {
 		Customer currentCustomer; 
-        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
-            currentCustomer = customers.get(currentPosition);
+        for (int id : customers.keySet()) {
+            currentCustomer = customers.get(id);
             if ( (currentCustomer.getFirstName().equals(first)) && (currentCustomer.getLastName().equals(last)) )
                 return currentCustomer;
         }
@@ -495,8 +487,8 @@ public class Manager {
         System.out.println();
         System.out.println("Customers:");
         System.out.println("First Name      Last Name        ID        Phone Number");
-        for (int currentPosition = 0; currentPosition < customers.size(); currentPosition++) {
-            Customer currentCustomer = customers.get(currentPosition);
+        for (int id : customers.keySet()) {
+            Customer currentCustomer = customers.get(id);
             System.out.printf("%-15s %-16s %-9d %s", currentCustomer.getFirstName(), currentCustomer.getLastName(), currentCustomer.getCustomerId(), currentCustomer.getPhoneNumber());
 			System.out.println();
         }
