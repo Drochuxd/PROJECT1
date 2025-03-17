@@ -623,8 +623,8 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-    ArrayList[]<Shipment> shipments =  new ArrayList<Shipment>();
-    ArrayList[]<Product> products =  new ArrayList<Product>();
+    ArrayList<Shipment> shipments =  new ArrayList<Shipment>();
+    ArrayList<Product> products =  new ArrayList<Product>();
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(10, 20, 1930);
       
@@ -682,9 +682,9 @@ public class Manager {
                                   }else if (shipmentChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
-                                      int id = scanner.nextLine();
-                                      for(int i=0; i < shipments.length; i++)
-                                      if (id.equils(shipments.get(i).getIdNumber())) shipments.remove(i);
+                                      int id = scanner.nextInt();
+                                      for(int i=0; i < shipments.size(); i++)
+                                      if (id == (shipments.get(i).getIdNumber())) shipments.remove(i);
                                   }else if (shipmentChoice == 6) {
                                       break;
                                  
@@ -810,9 +810,9 @@ public class Manager {
                                   }else if (productChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
-                                      int name = scanner.nextLine();
-                                      for(int i=0; i < shipment.length; i++)
-                                      if (name.equils(products.get(name).getName())) products.remove(i);
+                                      String name = scanner.nextLine();
+                                      for(int i=0; i < products.size(); i++)
+                                      if (name.equals(products.get(i).getName())) products.remove(i);
                                   }else {
                                       System.out.println("invalid option.");
                                   }
