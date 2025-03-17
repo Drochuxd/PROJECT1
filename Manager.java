@@ -49,7 +49,7 @@ public class Manager {
         else
             this.currentDay += 1;
     }
-	private String currentDateToStr() { //helper method that returns the date in form mm/dd/yyyy
+	public String currentDateToStr() { //helper method that returns the date in form mm/dd/yyyy
         if (currentMonth < 10) { 
             if (currentDay < 10) 
                 return "0" + currentMonth + "/0" + currentDay + "/" + currentYear;
@@ -637,7 +637,7 @@ public class Manager {
 		}
 		else {
 			System.out.println("Supplier with name " + name + " does not exist");
-			return null;
+         return null;
 		}
 	}
 	
@@ -772,25 +772,58 @@ public class Manager {
     public static void main (String[] args) {
     ArrayList<Shipment> shipments =  new ArrayList<Shipment>();
         Scanner scanner = new Scanner(System.in);
-              Manager manager = new Manager(10, 20, 1930);
+              Manager manager = new Manager(-1, -1, -1);
+              System.out.print("enter month: ");
+              int month = scanner.nextInt();
+              while(month>12 || month<1){
+                  System.out.print("enter month: ");
+                  month = scanner.nextInt();
+                  manager.setCurrentMonth(month);
+               }
+              System.out.print("enter day: ");
+              int day = scanner.nextInt();
+              while(day>manager.getMaxDay()||day<1){
+                  System.out.print("enter day: ");
+                  day = scanner.nextInt();
+                  manager.setCurrentDay(day);
+              }
+              System.out.print("enter year: ");
+              int year = scanner.nextInt();
+              manager.setCurrentYear(year);
       
               while (true) {
                   try {
                       System.out.println("\n Management Menu ");
-                      System.out.println("1. Shipment");
-                      System.out.println("2. Customer");
-                      System.out.println("3. Cashier");
-                      System.out.println("4. Product");
-                      System.out.println("5. Sale");
-                      System.out.println("6. Supplier");
-                      System.out.println("7. Exit");
+                      System.out.println("1. Date");
+                      System.out.println("2. EndDay");
+                      System.out.println("3. Shipment");
+                      System.out.println("4. Customer");
+                      System.out.println("5. Cashier");
+                      System.out.println("6. Product");
+                      System.out.println("7. Sale");
+                      System.out.println("8. Supplier");
+                      System.out.println("9. Exit");
                       System.out.print("choose an option: ");
       
                       int choice = scanner.nextInt();
                       scanner.nextLine(); // Consume newline
       
                       switch (choice) {
-                          case 1: // Shipment Menu
+                          case 1: // Date  
+                          System.out.print(manager.currentDateToStr());
+                              break;
+                          case 2: // End Day Menu
+                              System.out.println("\nEnd Day menu ");
+                              System.out.println("Are you sure");
+                              System.out.println("Enter y/n:");
+                              String input = scanner.next();
+                              if (input.equals("y")){
+                                 manager.incrementDay();
+                                 System.out.println("date is " + manager.currentDateToStr() + "\n");
+                                 break;}
+                              System.out.println("date is " + manager.currentDateToStr() + "\n");
+                              break;
+                          case 3: // Shipment Menu
                               while (true) {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
@@ -809,9 +842,9 @@ public class Manager {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
                                       System.out.print("enter shipment ID: ");
-                                      int shipmentId = scanner.nextInt();
+                                      int id = scanner.nextInt();
                                       scanner.nextLine();
-                                      System.out.println(manager.receiveShipment(new Supplier(supplierName), shipmentId));
+                                      System.out.println(manager.receiveShipment(supplierName, id));
                                   } else if (shipmentChoice == 3) {
                                       break;
                                   }else if (shipmentChoice == 4) {
@@ -841,7 +874,7 @@ public class Manager {
                               }
                               break;
       
-                          case 2: // Customer Menu
+                          case 4: // Customer Menu
                               while (true) {
                                   System.out.println("\n customer menu ");
                                   System.out.println("1. add customer");
@@ -879,7 +912,7 @@ public class Manager {
                               }
                               break;
       
-                          case 3: // Cashier Menu
+                          case 5: // Cashier Menu
                               while (true) {
                                   System.out.println("\n cashier menu ");
                                   System.out.println("1. add cashier");
@@ -917,7 +950,7 @@ public class Manager {
                               }
                               break;
       
-                          case 4: // Product Menu
+                          case 6: // Product Menu
                               while (true) {
                                   System.out.println("\n product menu ");
                                   System.out.println("1. generate low stock report");
@@ -943,7 +976,7 @@ public class Manager {
                                  } */else if (productChoice == 4) {
                                       //add product
                                       System.out.print("enter name: ");
-                                      String name = scanner.nextLine();
+                                      String productName = scanner.nextLine();
                                       System.out.print("enter cost: ");
                                       double cost = scanner.nextDouble();
                                       System.out.print("enter currentStock: ");
@@ -966,7 +999,7 @@ public class Manager {
                               }
                               break;
       
-                          case 5: // Sale Menu
+                          case 7: // Sale Menu
                               while (true) {
                                   System.out.println("\n sale menu ");
                                   System.out.println("1. add sold item");
@@ -981,9 +1014,9 @@ public class Manager {
       
                                   if (saleChoice == 1) {
                                       System.out.print("enter dayOfSale: ");
-                                      int dayOfSale = scanner.nextLine();
+                                      int dayOfSale = scanner.nextInt();
                                       System.out.print("enter monthOfSale: ");
-                                      int monthOfSale = scanner.nextDouble();
+                                      int monthOfSale = scanner.nextInt();
                                       System.out.print("enter yearOfSale: ");
                                       int yearOfSale = scanner.nextInt();
                                       System.out.print("enter cashier first: ");
@@ -995,7 +1028,7 @@ public class Manager {
                                       System.out.print("enter Customer last: ");
                                       String customerLast = scanner.nextLine();
                                       Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
-                                      Customer makingSale = manager.searchcustomerByName(customerFirst, customerLast).get(0);
+                                      Customer makingSale = manager.searchCustomerByName(customerFirst, customerLast).get(0);
                                       manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
                                  } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
@@ -1014,28 +1047,41 @@ public class Manager {
                                   }
                               }
                               break;
-                          case 6: // Supplier Menu
+                          case 8: // Supplier Menu
                               while (true) {
                                   System.out.println("\n supplier menu ");
                                   System.out.println("1. add supplier");
                                   System.out.println("2. remove supplier");
-                                  System.out.println("3. search supplier");
-                                  System.out.println("4. display Suppliers");
-                                  System.out.println("5. back to main menu");
+                                  System.out.println("3. modify supplier");
+                                  System.out.println("4. search supplier");
+                                  System.out.println("5. display Suppliers");
+                                  System.out.println("6. back to main menu");
                                   System.out.print("Choose an option: ");
       
                                   int saleChoice = scanner.nextInt();
                                   scanner.nextLine();
       
                                   if (saleChoice == 1) {
-                                      manager.addSuppliers();
+                                      System.out.print("enter supplier name: ");
+                                      String name = scanner.nextLine();
+                                      manager.addSupplier(name);
                                   } else if (saleChoice == 2) {
-                                      manager.removeSuppliers();
+                                      System.out.print("enter supplier name: ");
+                                      String name = scanner.nextLine();
+                                      manager.removeSupplier(name);
                                   } else if (saleChoice == 3) {
-                                      manager.searchSuppliers();
-                                  } else if (saleChoice == 4) {
+                                      System.out.print("enter supplier old name: ");
+                                      String oldName = scanner.nextLine();
+                                      System.out.print("enter supplier new name: ");
+                                      String newName = scanner.nextLine();
+                                      manager.modifySupplier(oldName, newName);
+                                  }else if (saleChoice == 4) {
+                                      System.out.print("enter supplier name: ");
+                                      String name = scanner.nextLine();
+                                      manager.searchSupplierByName(name);
+                                  } else if (saleChoice == 5) {
                                       manager.displaySuppliers();
-                                  }else if (saleChoice == 5) {
+                                  }else if (saleChoice == 6) {
                                       break;
                                   } else {
                                       System.out.println("invalid option.");
@@ -1043,7 +1089,7 @@ public class Manager {
                               }
                               break;
       
-                          case 7: // Exit
+                          case 9: // Exit
                               System.out.println("done");
                               scanner.close();
                               manager.terminateScanner();
