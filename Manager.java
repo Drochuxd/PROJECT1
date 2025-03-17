@@ -623,6 +623,8 @@ public class Manager {
     }
     
     public static void main (String[] args) {
+    ArrayList[]<Shipment> shipments =  new ArrayList<Shipment>();
+    ArrayList[]<Product> products =  new ArrayList<Product>();
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(10, 20, 1930);
       
@@ -646,7 +648,9 @@ public class Manager {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
                                   System.out.println("2. receive shipment");
-                                  System.out.println("3. back to main menu");
+                                  System.out.println("3. add shipment");
+                                  System.out.println("4. remove shipment");
+                                  System.out.println("5. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -663,6 +667,27 @@ public class Manager {
                                       System.out.println(manager.receiveShipment(new Supplier(supplierName), shipmentId));
                                   } else if (shipmentChoice == 3) {
                                       break;
+                                  }else if (shipmentChoice == 4) {
+                                      //add shipment
+                                      System.out.print("enter id: ");
+                                      int id = scanner.nextInt();
+                                      System.out.print("enter arrivalMonth: ");
+                                      int arrivalMonth = scanner.nextInt();
+                                      System.out.print("enter arrivalDay name: ");
+                                      int arrivalDay = scanner.nextInt();
+                                      System.out.print("enter arrivalYear name: ");
+                                      int arrivalYear = scanner.nextInt();
+
+                                      shipments.add(new Shipment(id, arrivalMonth, arrivalDay, arrivalYear));
+                                  }else if (shipmentChoice == 5) {
+                                      //remove shipment
+                                      System.out.print("enter id: ");
+                                      int id = scanner.nextLine();
+                                      for(int i=0; i < shipments.length; i++)
+                                      if (id.equils(shipments.get(i).getIdNumber())) shipments.remove(i);
+                                  }else if (shipmentChoice == 6) {
+                                      break;
+                                 
                                   } else {
                                       System.out.println("invalid option.");
                                   }
@@ -751,7 +776,9 @@ public class Manager {
                                   System.out.println("1. generate low stock report");
                                   System.out.println("2. search inventory");
                                   System.out.println("3. display inventory");
-                                  System.out.println("4. back to main menu");
+                                  System.out.println("4. add inventory");
+                                  System.out.println("5. remove inventory");
+                                  System.out.println("6. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int productChoice = scanner.nextInt();
@@ -767,8 +794,26 @@ public class Manager {
                                       manager.displayInventory();
                                       
                                  } */else if (productChoice == 4) {
-                                      break;
-                                  } else {
+                                      //add product
+                                      System.out.print("enter name: ");
+                                      String name = scanner.nextLine();
+                                      System.out.print("enter cost: ");
+                                      double cost = scanner.nextDouble();
+                                      System.out.print("enter currentStock: ");
+                                      int currentStock = scanner.nextInt();
+                                      System.out.print("enter maxStock: ");
+                                      int maxStock = scanner.nextInt();
+                                      System.out.print("enter lowPercentage: ");
+                                      int lowPercentage = scanner.nextInt();
+
+                                      products.add(new Product(name, cost, currentStock, maxStock, lowPercentage));
+                                  }else if (productChoice == 5) {
+                                      //remove shipment
+                                      System.out.print("enter id: ");
+                                      int name = scanner.nextLine();
+                                      for(int i=0; i < shipment.length; i++)
+                                      if (name.equils(products.get(name).getName())) products.remove(i);
+                                  }else {
                                       System.out.println("invalid option.");
                                   }
                               }

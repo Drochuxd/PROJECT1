@@ -8,10 +8,10 @@ public class Shipment{
     private int arrivalMonth;
     private int arrivalDay;
     private int arrivalYear;
-    private HashMap<String, Product> items = new HashMap<>();
+    private HashMap<String, Product> items = new HashMap<>(); 
     
     public Shipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear) { //shipment items are empty at creation
-        idNumber = id;
+        this.idNumber = id;
         this.arrivalMonth = arrivalMonth;
         this.arrivalDay = arrivalDay;
         this.arrivalYear = arrivalYear;
