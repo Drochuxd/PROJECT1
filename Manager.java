@@ -98,11 +98,15 @@ public class Manager {
     public String[][] getUpcomingShipments() {
         throw new UnsupportedOperationException("not implemented yet");
     }
-    public String receiveShipment(Supplier supplier, int id) {
+    public String receiveShipment(String supplierName, int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     //peek at an upcoming shipment from supplier with matching id, return string displaying info about it
-    public String peekShipment(Supplier supplier, int id) {
+    public String peekShipment(String supplierName, int id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+	//peek at all shipments from a specified supplier
+	public String peekShipments(String supplierName) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     public Product searchInventory(String productName) {
