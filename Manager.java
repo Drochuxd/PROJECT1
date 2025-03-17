@@ -441,6 +441,10 @@ public class Manager {
         return cashiersFound;
     }
 
+	public Cashier searchCashierById (int id) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
     public void displayCashiers() {
         System.out.println();
         System.out.println("Cashiers:");
@@ -494,7 +498,15 @@ public class Manager {
         System.out.println("Unable to find Customer " + first + " " + last); //If cashier is not found, null is returned instead
         return null;
     }
-
+	
+	public ArrayList<Customer> searchCustomerByName(String first) {
+		throw new UnsupportedOperationException ("Not implemented yet");
+	}
+	
+	public Customer searchCustomerById (int id) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
     public void displayCustomers() {
         System.out.println();
         System.out.println("Customers:");
@@ -506,6 +518,23 @@ public class Manager {
         }
     }
     
+	public void addSupplier(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void modifySupplier (String oldName, String newName) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public void removeSupplier(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	public Supplier searchSupplierByName(String name) {
+		throw new UnsupportedOperationException("not implemented yet");
+	}
+	
+	
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale, Customer makingSale) {
 		makingSale.incrementPurchase();
 		System.out.print("enter id number for new sale: ");
