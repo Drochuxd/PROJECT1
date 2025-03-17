@@ -566,23 +566,56 @@ public class Manager {
     }
     
 	public void addSupplier(String name) {
-		throw new UnsupportedOperationException("not implemented yet");
+		if (suppliers.get(name) == null) {
+			suppliers.put(new Supplier(name));
+		}
+		else {
+			System.out.print("this name already exists, would you like to overwrite? **doing so will erase all data associated with this supplier** [y/n]: ")
+			String input = scan.nextLine();
+			if (input.equals("y")) {
+				suppliers.put(new Supplier(name));
+			}
+			else {
+				System.out.println("addition of supplier was not successful"); 
+				System.out.println("if you would like to modify this supplier, please use the modify option");
+			}
 	}
 	
 	public void modifySupplier (String oldName, String newName) {
-		throw new UnsupportedOperationException("not implemented yet");
+		if (suppliers.get(oldName) != null) {
+			Supplier supplier = suppliers.get(oldName);
+			suppliers.remove(oldName);
+			supplier.setSupplierName(newName);
+			suppliers.put(newName, supplier); 
+		}
+		else {
+			System.out.println(oldName + " was not found");
+		}
 	}
 	
 	public void removeSupplier(String name) {
-		throw new UnsupportedOperationException("not implemented yet");
+		if (suppliers.get(name) != null) {
+			suppliers.remove(name);
+		}
+		else {
+			System.out.println(name + " was not found");
+		}
 	}
 	
 	public Supplier searchSupplierByName(String name) {
-		throw new UnsupportedOperationException("not implemented yet");
+		if (suppliers.get(name) != null) {
+			return supplers.get(name);
+		}
+		else {
+			System.out.println("Supplier with name " + name + " does not exist");
+		}
 	}
 	
 	public void displaySuppliers() {
-		throw new UnsupportedOperationException("not implemented yet");
+		System.out.printf("%-20s %s", "Supplier Names", "Number of Shipments");
+		for (Supplier supplier : suppliers.keySet()) {
+			System.out.printf("-20s %d", supplier.getName(), supplier.getAllShipments().size());
+		}
 	}
 	
 	
