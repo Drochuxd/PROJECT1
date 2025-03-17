@@ -567,18 +567,19 @@ public class Manager {
     
 	public void addSupplier(String name) {
 		if (suppliers.get(name) == null) {
-			suppliers.put(new Supplier(name));
+			suppliers.put(name, new Supplier(name));
 		}
 		else {
-			System.out.print("this name already exists, would you like to overwrite? **doing so will erase all data associated with this supplier** [y/n]: ")
+			System.out.print("this name already exists, would you like to overwrite? **doing so will erase all data associated with this supplier** [y/n]: ");
 			String input = scan.nextLine();
 			if (input.equals("y")) {
-				suppliers.put(new Supplier(name));
+				suppliers.put(name, new Supplier(name));
 			}
 			else {
 				System.out.println("addition of supplier was not successful"); 
 				System.out.println("if you would like to modify this supplier, please use the modify option");
 			}
+		}
 	}
 	
 	public void modifySupplier (String oldName, String newName) {
@@ -604,7 +605,7 @@ public class Manager {
 	
 	public Supplier searchSupplierByName(String name) {
 		if (suppliers.get(name) != null) {
-			return supplers.get(name);
+			return suppliers.get(name);
 		}
 		else {
 			System.out.println("Supplier with name " + name + " does not exist");
@@ -613,8 +614,8 @@ public class Manager {
 	
 	public void displaySuppliers() {
 		System.out.printf("%-20s %s", "Supplier Names", "Number of Shipments");
-		for (Supplier supplier : suppliers.keySet()) {
-			System.out.printf("-20s %d", supplier.getName(), supplier.getAllShipments().size());
+		for (Supplier supplier : suppliers.values()) {
+			System.out.printf("-20s %d", supplier.getSupplierName(), supplier.getAllShipments().size());
 		}
 	}
 	
