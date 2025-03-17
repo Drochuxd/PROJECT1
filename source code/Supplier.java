@@ -68,6 +68,7 @@ public class Supplier {
 	 else {
 		 return null;
 	 }
+ }
  
  public HashMap<Integer, Shipment> getAllShipments() {
 	 return upcomingShipments;

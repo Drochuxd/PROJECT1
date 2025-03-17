@@ -48,6 +48,14 @@ public class Shipment{
     public int getProductCount(String productName) {
       return items.get(productName).getCurrentStock();
     }
+	
+	public String getProductInfo() {
+		String result = String.format("%-20s %s", "Product Name", "Amount") + "\n";
+		for (Product product : items.values()) {
+			result += String.format("-20s %d", product.getName(), product.getCurrentStock()) + "\n";
+		}
+		return result; 
+	}
     
     public int getIdNumber() {
         return idNumber;

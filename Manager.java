@@ -103,12 +103,38 @@ public class Manager {
     }
     //peek at an upcoming shipment from supplier with matching id, return string displaying info about it
     public String peekShipment(String supplierName, int id) {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
+        if (suppliers.get(supplierName) != null) {
+			Shipment shipment = suppliers.get(supplierName).getShipment(id);
+			if (shipment == null) {
+				return "shipment id " + id + " for supplier " + supplierName + " does not exist";
+			}
+			else {
+				return "Shipment ID: " + id + "\nArrival Date: " + shipment.arrivalDateToStr() + "\nProduct Info: \n" + shipment.getProductInfo();
+			}
+		}
+		else {
+			return supplierName + " does not exist";
+		}
+	}
 	//peek at all shipments from a specified supplier
 	public String peekShipments(String supplierName) {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
+        String result = ""; 
+		if (suppliers.get(supplierName) != null) {
+			Supplier supplier = suppliers.get(supplierName);
+			if (supplier.getAllShipments().size() == 0) {
+				return "supplier " + supplierName + " has no shipments";
+			}
+			else {
+				for (Shipment shipment: supplier.getAllShipments().values()) {
+					result += "Shipment ID: " + shipment.getIdNumber() + "\nArrival Date: " + shipment.arrivalDateToStr() + "\nProduct Info: \n" + shipment.getProductInfo() + "\n";
+				}
+				return result;
+			}
+		}
+		else {
+			return supplierName + " does not exist";
+		}
+	}
     public Product searchInventory(String productName) {
         return inventory.get(productName); 
     }
@@ -609,6 +635,7 @@ public class Manager {
 		}
 		else {
 			System.out.println("Supplier with name " + name + " does not exist");
+			return null;
 		}
 	}
 	
