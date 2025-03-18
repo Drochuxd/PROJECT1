@@ -92,14 +92,23 @@ public class Manager {
 			}
 		}
 	}
-    //returns upcoming shipments within a certain timeframe
-    public void addShipment(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+    //adds a shipment
+    public void addShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
+        if (suppliers.get(supplierName) != null) {
+           suppliers.get(supplierName).addShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+       }else {
+			   System.out.println(supplierName + " does not exist");
+       }
     }
     
-    //returns upcoming shipments within a certain timeframe
-    public void removeShipment(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+    //removes a shipment
+    public void removeShipment(int id, String supplierName) {
+        suppliers.get(supplierName).removeShipment(id);
+    }
+    
+    //update a shipment
+    public void updateShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
+        suppliers.get(supplierName).updateShipment(id, arrivalMonth, arrivalDay, arrivalYear);
     }
     
     //returns upcoming shipments within a certain timeframe
@@ -783,7 +792,6 @@ public class Manager {
     }
     
     public static void main (String[] args) {
-    ArrayList<Shipment> shipments =  new ArrayList<Shipment>();
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(-1, -1, -1);
               System.out.print("enter month: ");
@@ -843,7 +851,8 @@ public class Manager {
                                   System.out.println("2. receive shipment");
                                   System.out.println("3. add shipment");
                                   System.out.println("4. remove shipment");
-                                  System.out.println("5. back to main menu");
+                                  System.out.println("5. update shipment");
+                                  System.out.println("6. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -864,19 +873,34 @@ public class Manager {
                                       int id = scanner.nextInt();
                                       System.out.print("enter arrivalMonth: ");
                                       int arrivalMonth = scanner.nextInt();
-                                      System.out.print("enter arrivalDay name: ");
+                                      System.out.print("enter arrivalDay: ");
                                       int arrivalDay = scanner.nextInt();
-                                      System.out.print("enter arrivalYear name: ");
+                                      System.out.print("enter arrivalYear: ");
                                       int arrivalYear = scanner.nextInt();
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
 
-                                      shipments.add(new Shipment(id, arrivalMonth, arrivalDay, arrivalYear));
+                                      manager.addShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName);
                                   }else if (shipmentChoice == 4) {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
-                                      for(int i=0; i < shipments.size(); i++)
-                                      if (id == (shipments.get(i).getIdNumber())) shipments.remove(i);
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      manager.removeShipment(id, supplierName);
                                   }else if (shipmentChoice == 5) {
+                                      System.out.print("enter id: ");
+                                      int id = scanner.nextInt();
+                                      System.out.print("enter arrivalMonth: ");
+                                      int arrivalMonth = scanner.nextInt();
+                                      System.out.print("enter arrivalDay: ");
+                                      int arrivalDay = scanner.nextInt();
+                                      System.out.print("enter arrivalYear: ");
+                                      int arrivalYear = scanner.nextInt();
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
+                                  }else if (shipmentChoice == 6) {
                                       break;
                                  
                                   } else {
