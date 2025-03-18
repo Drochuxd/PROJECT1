@@ -92,6 +92,7 @@ public class Manager {
 			}
 		}
 	}
+
     //adds a shipment
     public void addShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
         if (suppliers.get(supplierName) != null) {
@@ -112,18 +113,84 @@ public class Manager {
     }
     
     //returns upcoming shipments within a certain timeframe
-    public void getUpcomingShipments(String timeframe) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public String getUpcomingShipments(String timeframe) {
+        String result = "";
+		if (timeframe.equals("day")) {
+			for (Supplier supplier : suppliers.values()) {
+				result += String.format("%-20s ", supplier.getSupplierName()) + ": \n";
+				for (Shipment ship : supplier.getAllShipments().values()) {
+					if (ship.getArrivalDay() == currentDay && ship.getArrivalMonth() == currentMonth && ship.getArrivalYear() == currentYear)
+						result += "Shipment ID " + ship.getIdNumber() + " arrives at " + ship.arrivalDateToStr() + "\n";
+				}
+				result += "----------------------------------\n";
+			}
+			return result;
+		}
+		else if (timeframe.equals("month")) {
+			for (Supplier supplier : suppliers.values()) {
+				result += String.format("%-20s ", supplier.getSupplierName()) + ": \n";
+				for (Shipment ship : supplier.getAllShipments().values()) {
+					if (ship.getArrivalMonth() == currentMonth && ship.getArrivalYear() == currentYear)
+						result += "Shipment ID " + ship.getIdNumber() + " arrives at " + ship.arrivalDateToStr() + "\n";
+				}
+				result += "----------------------------------\n";
+			}
+			return result;
+		}
+		else if (timeframe.equals("year")) {
+			for (Supplier supplier : suppliers.values()) {
+				result += String.format("%-20s ", supplier.getSupplierName()) + ": \n";
+				for (Shipment ship : supplier.getAllShipments().values()) {
+					if (ship.getArrivalYear() == currentYear)
+						result += "Shipment ID " + ship.getIdNumber() + " arrives at " + ship.arrivalDateToStr() + "\n";
+				}
+				result += "----------------------------------\n";
+			}
+			return result;
+		}
+		else 
+			return "invalid timeframe";
     }
     //returns all upcoming shipments
-    public void getUpcomingShipments() {
+    public String getUpcomingShipments() {
         String result = "";
 		for (Supplier supplier : suppliers.values()) {
-			result += String.format("%-20s ", supplier.getSupplierName());
+			result += String.format("%-20s ", supplier.getSupplierName()) + ": \n";
+			for (Shipment ship : supplier.getAllShipments().values()) {
+				result += "Shipment ID " + ship.getIdNumber() + " arrives at " + ship.arrivalDateToStr() + "\n";
+			}
+			result += "----------------------------------";
 		}
+		return result; 
     }
     public String receiveShipment(String supplierName, int id) {
-        throw new UnsupportedOperationException("not implemented yet");
+        Supplier supplier = suppliers.get(supplierName);
+		String output = "";
+		if (supplier != null) {
+			Shipment ship = supplier.getShipment(id);
+			if (ship != null) {
+				HashMap<String, Product> items = ship.getItems(); //all products in shipment
+				Product existingProduct; //the product info that is already in inventory
+				for (Product item : items.values()) {
+					if (inventory.get(item.getName()) != null) { //already exists in inventory
+						existingProduct = inventory.get(item); 
+						existingProduct.setCurrentStock(existingProduct.getCurrentStock() + item.getCurrentStock());
+						inventory.put (item.getName(), existingProduct);
+					}
+					else { //new product not yet in inventory
+						inventory.put (item.getName(), item);
+					}
+					output += "adding product " + item.getName() + "... new stock is now " + inventory.get(item.getName()).getCurrentStock() + "\n";
+				}
+				return output;
+			}
+			else {
+				return "shipment with id " + id + " does not exist";
+			}
+		}
+		else {
+			return "supplier with name " + supplierName + " not found";
+		}
     }
     //peek at an upcoming shipment from supplier with matching id, return string displaying info about it
     public String peekShipment(String supplierName, int id) {
@@ -760,7 +827,7 @@ public class Manager {
 			System.out.println("Failed to remove sale with id number " + id);
     }
     public void displaySales() {
-        throw new UnsupportedOperationException("not implemented yet");
+        
     }
     
     public int getCurrentMonth() {
