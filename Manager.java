@@ -827,7 +827,9 @@ public class Manager {
 			System.out.println("Failed to remove sale with id number " + id);
     }
     public void displaySales() {
-        
+        for (Sale sale : sales) {
+			System.out.println(sale.saleInfoToStr());
+		}
     }
     
     public int getCurrentMonth() {
