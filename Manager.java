@@ -93,13 +93,14 @@ public class Manager {
 		}
 	}
     //returns upcoming shipments within a certain timeframe
-    public String getUpcomingShipments(String timeframe) {
+    public void getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
     //returns all upcoming shipments
-    public String getUpcomingShipments() {
-        for (Supplier supplier : suppliers.values()) {
-			
+    public void getUpcomingShipments() {
+        String result = "";
+		for (Supplier supplier : suppliers.values()) {
+			result += String.format("%-20s ", supplier.getSupplierName());
 		}
     }
     public String receiveShipment(String supplierName, int id) {
