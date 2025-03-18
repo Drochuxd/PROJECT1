@@ -270,8 +270,7 @@ public class Manager {
 		
 		if (timeframe.equals("month")) {
 			for (Sale sale : sales) {
-				if (sale.getMonthOfSale() != currentMonth) //stop counting
-               if (sale.getYearOfSale() != currentYear)
+				if (sale.getMonthOfSale() != currentMonth || sale.getYearOfSale() != currentYear) //stop counting
 					  break;
 				curProductsSold = sale.getProductsSold();
 				for (Product item : curProductsSold.keySet()) {
@@ -286,9 +285,7 @@ public class Manager {
 		}
 		else if (timeframe.equals("day")) {
 			for (Sale sale : sales) {
-				if (sale.getMonthOfSale() != currentDay) //stop counting
-                if (sale.getMonthOfSale() != currentMonth) //stop counting
-                   if (sale.getYearOfSale() != currentYear)
+				if (sale.getDayOfSale() != currentDay || sale.getMonthOfSale() != currentMonth || sale.getYearOfSale() != currentYear) //stop counting
 					          break;
 				curProductsSold = sale.getProductsSold();
 				for (Product item : curProductsSold.keySet()) {
