@@ -271,7 +271,8 @@ public class Manager {
 		if (timeframe.equals("month")) {
 			for (Sale sale : sales) {
 				if (sale.getMonthOfSale() != currentMonth) //stop counting
-					break;
+               if (sale.getYearOfSale() != currentYear)
+					  break;
 				curProductsSold = sale.getProductsSold();
 				for (Product item : curProductsSold.keySet()) {
 					if (products.get(item) == null) { //product hasn't been counted yet
@@ -286,7 +287,9 @@ public class Manager {
 		else if (timeframe.equals("day")) {
 			for (Sale sale : sales) {
 				if (sale.getMonthOfSale() != currentDay) //stop counting
-					break;
+                if (sale.getMonthOfSale() != currentMonth) //stop counting
+                   if (sale.getYearOfSale() != currentYear)
+					          break;
 				curProductsSold = sale.getProductsSold();
 				for (Product item : curProductsSold.keySet()) {
 					if (products.get(item) == null) { //product hasn't been counted yet
@@ -840,7 +843,7 @@ public class Manager {
                                   scanner.nextLine();
       
                                   if (shipmentChoice == 1) {
-                                      manager.getUpcomingShipments();
+                                     // manager.getUpcomingShipments();
                                   } else if (shipmentChoice == 2) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
