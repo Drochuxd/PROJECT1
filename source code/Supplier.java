@@ -47,15 +47,13 @@ public class Supplier {
   }
   public void addShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear){ //creates a new shipment and adds it to upcomingShipments
       Shipment shipment = new Shipment(id, arrivalMonth, arrivalDay, arrivalYear);
-      upcomingShipments.put(id,shipment);
-        
+      upcomingShipments.put(id,shipment); 
   }
   public void updateShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear){ //updates shipment with corresponding id number 
             Shipment shipment = upcomingShipments.get(id);
             shipment.setArrivalDay(arrivalDay);
             shipment.setArrivalMonth(arrivalMonth);
             shipment.setArrivalYear(arrivalYear);
- 
   }
   public void removeShipment(int id){ //removes a shipment by its id, does nothing if it doesn’t exist 
       upcomingShipments.remove(id);
