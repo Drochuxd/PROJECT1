@@ -29,7 +29,7 @@ public class Manager {
     private int getMaxDay() { //helper method that returns the highest day in the month
         if (currentMonth == 2)
             return 28;
-		else if (currentMonth == 2 && ((currentYear % 4 == 0) && (currentYear % 100 != 0 || currentYear % 400 == 0)) //account for leap year
+		else if (currentMonth == 2 && ((currentYear % 4 == 0) && (currentYear % 100 != 0 || currentYear % 400 == 0))) //account for leap year
 			return 29;
         else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9 || currentMonth == 11)
             return 30;
@@ -94,11 +94,13 @@ public class Manager {
 	}
     //returns upcoming shipments within a certain timeframe
     public String getUpcomingShipments(String timeframe) {
-        throw new UnsuppaddortedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("not implemented yet");
     }
     //returns all upcoming shipments
     public String getUpcomingShipments() {
-        throw new UnsupportedOperationException("not implemented yet");
+        for (Supplier supplier : suppliers.values()) {
+			
+		}
     }
     public String receiveShipment(String supplierName, int id) {
         throw new UnsupportedOperationException("not implemented yet");
@@ -1103,4 +1105,5 @@ public class Manager {
                       scanner.nextLine(); // Clear invalid input
                   }
               }
-          }}
+          }
+}
