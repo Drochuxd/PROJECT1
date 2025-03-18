@@ -93,6 +93,16 @@ public class Manager {
 		}
 	}
     //returns upcoming shipments within a certain timeframe
+    public void addShipment(String timeframe) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+    
+    //returns upcoming shipments within a certain timeframe
+    public void removeShipment(String timeframe) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+    
+    //returns upcoming shipments within a certain timeframe
     public void getUpcomingShipments(String timeframe) {
         throw new UnsupportedOperationException("not implemented yet");
     }
@@ -779,14 +789,14 @@ public class Manager {
               System.out.print("enter month: ");
               int month = scanner.nextInt();
               while(month>12 || month<1){
-                  System.out.print("enter month: ");
+                  System.out.print("enter valid month: ");
                   month = scanner.nextInt();
                   manager.setCurrentMonth(month);
                }
               System.out.print("enter day: ");
               int day = scanner.nextInt();
               while(day>manager.getMaxDay()||day<1){
-                  System.out.print("enter day: ");
+                  System.out.print("enter valid day: ");
                   day = scanner.nextInt();
                   manager.setCurrentDay(day);
               }
@@ -840,7 +850,7 @@ public class Manager {
                                   scanner.nextLine();
       
                                   if (shipmentChoice == 1) {
-                                     // manager.getUpcomingShipments();
+                                     manager.getUpcomingShipments();
                                   } else if (shipmentChoice == 2) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
@@ -849,8 +859,6 @@ public class Manager {
                                       scanner.nextLine();
                                       System.out.println(manager.receiveShipment(supplierName, id));
                                   } else if (shipmentChoice == 3) {
-                                      break;
-                                  }else if (shipmentChoice == 4) {
                                       //add shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -862,13 +870,13 @@ public class Manager {
                                       int arrivalYear = scanner.nextInt();
 
                                       shipments.add(new Shipment(id, arrivalMonth, arrivalDay, arrivalYear));
-                                  }else if (shipmentChoice == 5) {
+                                  }else if (shipmentChoice == 4) {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
                                       for(int i=0; i < shipments.size(); i++)
                                       if (id == (shipments.get(i).getIdNumber())) shipments.remove(i);
-                                  }else if (shipmentChoice == 6) {
+                                  }else if (shipmentChoice == 5) {
                                       break;
                                  
                                   } else {
