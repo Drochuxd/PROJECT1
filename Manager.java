@@ -811,7 +811,7 @@ public class Manager {
             curNumber = input.split(":")[1].strip();
             success = this.sellItem(curProduct, Integer.parseInt(curNumber)); //subtracts item from inventory
             if (success) {
-               newSale.addItem(inventory.get(curProduct));
+               newSale.addItem(inventory.get(curProduct), Integer.parseInt(curNumber));
             }
             else {
                System.out.println("product addition failed: not enough in stock");
@@ -832,12 +832,12 @@ public class Manager {
         String curProduct = "oh no";
         String curNumber = "nonono";
         boolean success = false;
-        while (!(input.toLowerCase().equals("q"))) {
+        while (!(input.equals("q"))) {
             curProduct = input.split(":")[0].strip();
             curNumber = input.split(":")[1].strip();
             success = this.sellItem(curProduct, Integer.parseInt(curNumber)); //subtracts item from inventory
             if (success) {
-               newSale.addItem(inventory.get(curProduct));
+               newSale.addItem(inventory.get(curProduct), Integer.parseInt(curNumber));
             }
             else {
                System.out.println("product addition failed: not enough in stock");
@@ -859,10 +859,11 @@ public class Manager {
             inventory.put(productName, update);
 			inventoryStockOrder.remove(productName); //removing old placement in stock order
 			boolean placed = false;
-			for (int i = 0; i < inventoryStockOrder.size(); i++) {
+			for (int i = 0; i < inventoryStockOrder.size()-1; i++) {
 				if (inventory.get(inventoryStockOrder.get(i)).getStockPercentage() >= update.getStockPercentage()) { //place at index i
 					inventoryStockOrder.add(i, productName);
 					placed = true;
+					break;
 				}
 			}
 			if (!placed)
@@ -889,7 +890,7 @@ public class Manager {
 			System.out.println(sale.saleInfoToStr());
 		}
     }
-    
+	    
     public int getCurrentMonth() {
         return currentMonth; 
     }
@@ -1281,7 +1282,7 @@ public class Manager {
                           case 7: // Sale Menu
                               while (true) {
                                   System.out.println("\n sale menu ");
-                                  System.out.println("1. add sold item");
+                                  System.out.println("1. create sale");
                                   System.out.println("2. most sold item");
                                   System.out.println("3. number of sales");
                                   System.out.println("4. display sales");
@@ -1305,6 +1306,7 @@ public class Manager {
                                       String cashierFirst = scanner.nextLine();
                                       System.out.print("enter cashier last: ");
                                       String cashierLast = scanner.nextLine();
+<<<<<<< HEAD
                                       System.out.print("enter Customer first: ");
                                       String customerFirst = scanner.nextLine();
                                       System.out.print("enter Customer last: ");
@@ -1313,6 +1315,22 @@ public class Manager {
                                       Customer makingSale = manager.searchCustomerByName(customerFirst, customerLast).get(0);
                                       manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
                                       
+=======
+									  Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
+									  System.out.print("Is the customer registered in system? [y/n]: ");
+									  boolean isRegistered = scanner.nextLine().equals("y");
+									  if (isRegistered) {
+										System.out.print("enter Customer first: ");
+										String customerFirst = scanner.nextLine();
+										System.out.print("enter Customer last: ");
+										String customerLast = scanner.nextLine();
+										Customer makingSale = manager.searchCustomerByName(customerFirst, customerLast).get(0);
+										manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
+									  }
+									  else {
+										  manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale);
+									  }
+>>>>>>> 2c8fcb3 (sale adjustment, bug fixes)
                                  } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();

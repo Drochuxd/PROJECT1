@@ -52,7 +52,7 @@ public class Shipment{
 	public String getProductInfo() {
 		String result = String.format("%-20s %s", "Product Name", "Amount") + "\n";
 		for (Product product : items.values()) {
-			result += String.format("-20s %d", product.getName(), product.getCurrentStock()) + "\n";
+			result += String.format("%-20s %d", product.getName(), product.getCurrentStock()) + "\n";
 		}
 		return result; 
 	}
