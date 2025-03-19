@@ -970,7 +970,9 @@ public class Manager {
                                   System.out.println("4. add shipment");
                                   System.out.println("5. remove shipment");
                                   System.out.println("6. update shipment");
-                                  System.out.println("7. back to main menu");
+                                  System.out.println("7. add Product To Shipment");
+                                  System.out.println("7. add new Product To Shipment");
+                                  System.out.println("8. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -1046,6 +1048,45 @@ public class Manager {
                                       String supplierName = scanner.nextLine();
                                       manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
                                   }else if (shipmentChoice == 7) {
+                                      //add Product To shipment
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      scanner.nextLine();
+                                      System.out.print("enter shipmentId: ");
+                                      int shipmentId = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter item: ");
+                                      String item = scanner.nextLine();
+                                      Product shipItem = manager.searchInventory(item);
+                                      scanner.nextLine();
+                                      System.out.print("enter numberOfItems: ");
+                                      int numberOfItems = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.addProductToShipment(supplierName, shipmentId, shipItem, numberOfItems);
+                                  }else if (shipmentChoice == 8) {
+                                      //add Product To shipment
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      scanner.nextLine();
+                                      System.out.print("enter shipmentId: ");
+                                      int shipmentId = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter productName: ");
+                                      String productName = scanner.nextLine();
+                                      System.out.print("enter cost: ");
+                                      double cost = scanner.nextDouble();
+                                      scanner.nextLine();
+                                      System.out.print("enter currentStock: ");
+                                      int currentStock = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter maxStock: ");
+                                      int maxStock = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter lowPercentage: ");
+                                      int lowPercentage = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.addProductToShipment(supplierName, shipmentId, productName, cost, currentStock, maxStock, lowPercentage);
+                                  }else if (shipmentChoice == 9) {
                                       break;
                                  
                                   } else {
