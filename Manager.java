@@ -110,8 +110,46 @@ public class Manager {
     
     //update a shipment
     public void updateShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
-        suppliers.get(supplierName).updateShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+        if (suppliers.get(supplierName) == null) {
+			System.out.println("supplier " + supplierName + " does not exist");
+			return;
+		}
+		else if (suppliers.get(supplierName).getShipment(id) == null) {
+			System.out.println("shipment id " + id + " does not exist");
+			return;
+		}
+		suppliers.get(supplierName).updateShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+		System.out.println("Shipment id " + id + " from supplier " + supplierName + " was succesfully updated");
     }
+	
+	public void addProductToShipment(String supplierName, int shipmentId, Product item, int numberOfItems) { //if item already exists
+		if (suppliers.get(supplierName) != null) {
+			if (suppliers.get(supplierName).getShipment(shipmentId) != null) {
+				suppliers.get(supplierName).getShipment(shipmentId).addProduct(item.getName(), item.getCost(), numberOfItems, item.getMaxStock(), item.getLowPercentage());
+			}
+			else { //no matching shipment
+				System.out.println("Shipment id " + shipmentId + " does not exist");
+			}
+		}
+		else { //no matching supplier
+			System.out.println("Supplier " + supplierName + " was not found"); 
+		}
+	}
+	
+	public void addProductToShipment(String supplierName, int shipmentId, String productName, double cost, int currentStock, int maxStock, int lowPercentage) { //if item does not yet exist
+		Product newItem = new Product (productName, cost, currentStock, maxStock, lowPercentage);
+		if (suppliers.get(supplierName) != null) {
+			if (suppliers.get(supplierName).getShipment(shipmentId) != null) {
+				suppliers.get(supplierName).getShipment(shipmentId).addProduct(productName, cost, currentStock, maxStock, lowPercentage);
+			}
+			else { //no matching shipment
+				System.out.println("Shipment id " + shipmentId + " does not exist");
+			}
+		}
+		else { //no matching supplier
+			System.out.println("Supplier " + supplierName + " was not found"); 
+		}
+	}
     
     //returns upcoming shipments within a certain timeframe
     public String getUpcomingShipments(String timeframe) {
@@ -171,15 +209,25 @@ public class Manager {
 			Shipment ship = supplier.getShipment(id);
 			if (ship != null) {
 				HashMap<String, Product> items = ship.getItems(); //all products in shipment
+				int index = 0;
 				Product existingProduct; //the product info that is already in inventory
 				for (Product item : items.values()) {
 					if (inventory.get(item.getName()) != null) { //already exists in inventory
 						existingProduct = inventory.get(item); 
 						existingProduct.setCurrentStock(existingProduct.getCurrentStock() + item.getCurrentStock());
+						index = 0;
+						inventoryStockOrder.remove(item.getName());
+						for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
+							if (existingProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)).getStockPercentage())
+								index++;
+							else
+								break;
+						    }
+						    inventoryStockOrder.add(index, existingProduct.getName());
 						inventory.put (item.getName(), existingProduct);
 					}
 					else { //new product not yet in inventory
-						inventory.put (item.getName(), item);
+						this.addProduct(item.getName(), item.getCost(), item.getCurrentStock(), item.getMaxStock(), item.getLowPercentage());
 					}
 					output += "adding product " + item.getName() + "... new stock is now " + inventory.get(item.getName()).getCurrentStock() + "\n";
 				}
@@ -238,31 +286,31 @@ public class Manager {
 			case 1: //alphabetical order
 				for (int i = 0; i < inventoryAlphabetOrder.size(); i++) {
 					curProduct = inventory.get(inventoryAlphabetOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 2: //price descending
 				for (int i = inventoryPriceOrder.size()-1; i >= 0; i--) {
 					curProduct = inventory.get(inventoryPriceOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 3: //price ascending
 				for (int i = 0; i < inventoryPriceOrder.size(); i++) {
 					curProduct = inventory.get(inventoryPriceOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 4: //percentage stock descending
 				for (int i = inventoryStockOrder.size()-1; i >= 0; i--) {
 					curProduct = inventory.get(inventoryStockOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 5: //percentage stock ascending
 				for (int i = 0; i < inventoryStockOrder.size(); i++) {
 					curProduct = inventory.get(inventoryStockOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			default:
@@ -308,6 +356,7 @@ public class Manager {
                   else
                      break;
                }
+			   inventoryAlphabetOrder.add(index, productName);
             }
         }
         else {
@@ -336,6 +385,7 @@ public class Manager {
                else
                   break;
             }
+			inventoryAlphabetOrder.add(index, productName);
         }
 		System.out.println("successfully added product " + productName);
     }
@@ -880,7 +930,7 @@ public class Manager {
                manager.setCurrentMonth(month);
               System.out.print("enter day (dd): ");
               int day = scanner.nextInt();
-              while(day>manager.getMaxDay()||day<1){
+              while(day > manager.getMaxDay()||day<1){
                   System.out.print("enter valid day (dd): ");
                   day = scanner.nextInt();
               }
@@ -893,7 +943,7 @@ public class Manager {
                   try {
                       System.out.println("\n Management Menu ");
                       System.out.println("1. Date");
-                      System.out.println("2. EndDay");
+                      System.out.println("2. End Day");
                       System.out.println("3. Shipment");
                       System.out.println("4. Customer");
                       System.out.println("5. Cashier");
@@ -925,11 +975,14 @@ public class Manager {
                               while (true) {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
-                                  System.out.println("2. receive shipment");
-                                  System.out.println("3. add shipment");
-                                  System.out.println("4. remove shipment");
-                                  System.out.println("5. update shipment");
-                                  System.out.println("6. back to main menu");
+                                  System.out.println("2. view upcoming shipments by date");
+                                  System.out.println("3. receive shipment");
+                                  System.out.println("4. add shipment");
+                                  System.out.println("5. remove shipment");
+                                  System.out.println("6. update shipment");
+                                  System.out.println("7. add Product To Shipment");
+                                  System.out.println("7. add new Product To Shipment");
+                                  System.out.println("8. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -938,14 +991,31 @@ public class Manager {
                                   if (shipmentChoice == 1) {
                                     System.out.println("----------------------------------"); 
                                     System.out.print(manager.getUpcomingShipments());
-                                  } else if (shipmentChoice == 2) {
+                                  } if (shipmentChoice == 2) {
+                                       System.out.println("\n upcoming shipments ");
+                                       System.out.println("1. view upcoming shipments by day");
+                                       System.out.println("2. view upcoming shipments by month");
+                                       System.out.println("3. view upcoming shipments by year");
+                                       int dateChoice = scanner.nextInt();
+                                       scanner.nextLine();
+                                       if (dateChoice == 1){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("day"));}
+                                       else if (dateChoice == 2){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("month"));}
+                                       else if (dateChoice == 3){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("year"));}
+                                  }
+                                  else if (shipmentChoice == 3) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
                                       System.out.print("enter shipment ID: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
                                       System.out.println(manager.receiveShipment(supplierName, id));
-                                  } else if (shipmentChoice == 3) {
+                                  } else if (shipmentChoice == 4) {
                                       //add shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -963,7 +1033,7 @@ public class Manager {
                                       String supplierName = scanner.nextLine();
 
                                       manager.addShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName);
-                                  }else if (shipmentChoice == 4) {
+                                  }else if (shipmentChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -971,7 +1041,7 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.removeShipment(id, supplierName);
-                                  }else if (shipmentChoice == 5) {
+                                  }else if (shipmentChoice == 6) {
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
@@ -987,7 +1057,46 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
-                                  }else if (shipmentChoice == 6) {
+                                  }else if (shipmentChoice == 7) {
+                                      //add Product To shipment
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      scanner.nextLine();
+                                      System.out.print("enter shipmentId: ");
+                                      int shipmentId = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter item: ");
+                                      String item = scanner.nextLine();
+                                      Product shipItem = manager.searchInventory(item);
+                                      scanner.nextLine();
+                                      System.out.print("enter numberOfItems: ");
+                                      int numberOfItems = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.addProductToShipment(supplierName, shipmentId, shipItem, numberOfItems);
+                                  }else if (shipmentChoice == 8) {
+                                      //add Product To shipment
+                                      System.out.print("enter supplierName: ");
+                                      String supplierName = scanner.nextLine();
+                                      scanner.nextLine();
+                                      System.out.print("enter shipmentId: ");
+                                      int shipmentId = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter productName: ");
+                                      String productName = scanner.nextLine();
+                                      System.out.print("enter cost: ");
+                                      double cost = scanner.nextDouble();
+                                      scanner.nextLine();
+                                      System.out.print("enter currentStock: ");
+                                      int currentStock = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter maxStock: ");
+                                      int maxStock = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.print("enter lowPercentage: ");
+                                      int lowPercentage = scanner.nextInt();
+                                      scanner.nextLine();
+                                      manager.addProductToShipment(supplierName, shipmentId, productName, cost, currentStock, maxStock, lowPercentage);
+                                  }else if (shipmentChoice == 9) {
                                       break;
                                  
                                   } else {
@@ -1092,9 +1201,41 @@ public class Manager {
                                   } else if (productChoice == 2) {
                                       System.out.print("enter product name: ");
                                       String productName = scanner.nextLine();
-                                      manager.searchInventory(productName);
+                                      Product found = manager.searchInventory(productName);
+									  if (found == null) {
+										  System.out.println("Product with name " + productName + " was not found");
+									  }
+									  else {
+										  System.out.println();
+										  System.out.println("Product Name: " + productName);
+										  System.out.printf("Cost: $%.2f\n", found.getCost());
+										  System.out.printf("Stock: %d out of %d\n", found.getCurrentStock(), found.getMaxStock());
+									  }
+                                      
                                   } else if (productChoice == 3) {
-                                      manager.displayInventory(1);
+                                      System.out.println("\n display inventory menu ");
+                                       System.out.println("1. display inventory alphabetical");
+                                       System.out.println("2. display inventory descending");
+                                       System.out.println("3. display inventory ascending");
+                                       System.out.println("4. display inventory percentage stock descending");
+                                       System.out.println("5. display inventory percentage stock ascending");
+                                       int displayChoice = scanner.nextInt();
+                                       scanner.nextLine();
+                                       if (displayChoice == 1){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(1);}
+                                       else if (displayChoice == 2){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(2);}
+                                       else if (displayChoice == 3){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(3);}
+                                       else if (displayChoice == 4){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(4);}
+                                       else if (displayChoice == 5){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(5);}
                                       
                                  } else if (productChoice == 4) {
                                       //add product
@@ -1226,10 +1367,11 @@ public class Manager {
                               return;
       
                           default:
-                              System.out.println("Invalid option. Please enter a number between 1 and 6.");
+                              System.out.println("Invalid option. Please enter a number between 1 and 9.");
                       }
                   } catch (Exception e) {
-                      System.out.println("Invalid input! Please enter a valid number.");
+                      System.out.println("OH NO! something went wrong :/ (enter a character to go back to menu)");
+					  e.printStackTrace();
                       scanner.nextLine(); // Clear invalid input
                   }
               }
