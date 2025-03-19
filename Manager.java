@@ -925,11 +925,12 @@ public class Manager {
                               while (true) {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
-                                  System.out.println("2. receive shipment");
-                                  System.out.println("3. add shipment");
-                                  System.out.println("4. remove shipment");
-                                  System.out.println("5. update shipment");
-                                  System.out.println("6. back to main menu");
+                                  System.out.println("2. view upcoming shipments buy date");
+                                  System.out.println("3. receive shipment");
+                                  System.out.println("4. add shipment");
+                                  System.out.println("5. remove shipment");
+                                  System.out.println("6. update shipment");
+                                  System.out.println("7. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -938,14 +939,31 @@ public class Manager {
                                   if (shipmentChoice == 1) {
                                     System.out.println("----------------------------------"); 
                                     System.out.print(manager.getUpcomingShipments());
-                                  } else if (shipmentChoice == 2) {
+                                  } if (shipmentChoice == 2) {
+                                       System.out.println("\n upcoming shipments ");
+                                       System.out.println("1. view upcoming shipments by day");
+                                       System.out.println("2. view upcoming shipments by month");
+                                       System.out.println("3. view upcoming shipments by year");
+                                       int dateChoice = scanner.nextInt();
+                                       scanner.nextLine();
+                                       if (dateChoice = 1){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("day"));}
+                                       else if (dateChoice = 2){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("month"));}
+                                       else if (dateChoice = 3){
+                                          System.out.println("----------------------------------"); 
+                                          System.out.print(manager.getUpcomingShipments("year"));}
+                                  }
+                                  else if (shipmentChoice == 3) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
                                       System.out.print("enter shipment ID: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
                                       System.out.println(manager.receiveShipment(supplierName, id));
-                                  } else if (shipmentChoice == 3) {
+                                  } else if (shipmentChoice == 4) {
                                       //add shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -963,7 +981,7 @@ public class Manager {
                                       String supplierName = scanner.nextLine();
 
                                       manager.addShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName);
-                                  }else if (shipmentChoice == 4) {
+                                  }else if (shipmentChoice == 5) {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -971,7 +989,7 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.removeShipment(id, supplierName);
-                                  }else if (shipmentChoice == 5) {
+                                  }else if (shipmentChoice == 6) {
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
@@ -987,7 +1005,7 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
-                                  }else if (shipmentChoice == 6) {
+                                  }else if (shipmentChoice == 7) {
                                       break;
                                  
                                   } else {
@@ -1092,9 +1110,34 @@ public class Manager {
                                   } else if (productChoice == 2) {
                                       System.out.print("enter product name: ");
                                       String productName = scanner.nextLine();
-                                      manager.searchInventory(productName);
+                                      product found = manager.searchInventory(productName);
+                                      
                                   } else if (productChoice == 3) {
-                                      manager.displayInventory(1);
+                                      System.out.println("\n display inventory menu ");
+                                       System.out.println("1. display inventory alphabetical");
+                                       System.out.println("2. display inventory descending");
+                                       System.out.println("3. display inventory ascending");
+                                       System.out.println("4. display inventory percentage stock descending");
+                                       System.out.println("5. display inventory percentage stock descending");
+                                       int displayChoice = scanner.nextInt();
+                                       scanner.nextLine();
+                                       if (displayChoice = 1){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(1);}
+                                       else if (displayChoice = 2){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(2);}
+                                       else if (displayChoice = 3){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(3);}
+                                       else if (displayChoice = 4){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(4);}
+                                       else if (displayChoice = 5){
+                                          System.out.println("----------------------------------"); 
+                                          manager.displayInventory(5);}
+                                       
+                                     
                                       
                                  } else if (productChoice == 4) {
                                       //add product
@@ -1226,7 +1269,7 @@ public class Manager {
                               return;
       
                           default:
-                              System.out.println("Invalid option. Please enter a number between 1 and 6.");
+                              System.out.println("Invalid option. Please enter a number between 1 and 9.");
                       }
                   } catch (Exception e) {
                       System.out.println("Invalid input! Please enter a valid number.");
