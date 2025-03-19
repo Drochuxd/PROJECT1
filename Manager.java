@@ -981,8 +981,8 @@ public class Manager {
                                   System.out.println("5. remove shipment");
                                   System.out.println("6. update shipment");
                                   System.out.println("7. add Product To Shipment");
-                                  System.out.println("7. add new Product To Shipment");
-                                  System.out.println("8. back to main menu");
+                                  System.out.println("8. add new Product To Shipment");
+                                  System.out.println("9. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
