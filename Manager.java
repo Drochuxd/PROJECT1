@@ -1318,7 +1318,8 @@ public class Manager {
 									  }
 									  else {
 										  manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale);
-                                }
+									  }
+									  
                                  } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();
