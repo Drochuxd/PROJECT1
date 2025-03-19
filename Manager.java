@@ -124,11 +124,11 @@ public class Manager {
 	
 	public void addProductToShipment(String supplierName, int shipmentId, Product item, int numberOfItems) { //if item already exists
 		if (suppliers.get(supplierName) != null) {
-			if (suppliers.get(supplierName).getShipment(shipmentId)) {
+			if (suppliers.get(supplierName).getShipment(shipmentId) != null) {
 				suppliers.get(supplierName).getShipment(shipmentId).addProduct(item.getName(), item.getCost(), numberOfItems, item.getMaxStock(), item.getLowPercentage());
 			}
 			else { //no matching shipment
-				System.out.println("Shipment id " + id + " does not exist");
+				System.out.println("Shipment id " + shipmentId + " does not exist");
 			}
 		}
 		else { //no matching supplier
@@ -139,11 +139,11 @@ public class Manager {
 	public void addProductToShipment(String supplierName, int shipmentId, String productName, double cost, int currentStock, int maxStock, int lowPercentage) { //if item does not yet exist
 		Product newItem = new Product (productName, cost, currentStock, maxStock, lowPercentage);
 		if (suppliers.get(supplierName) != null) {
-			if (suppliers.get(supplierName).getShipment(shipmentId)) {
+			if (suppliers.get(supplierName).getShipment(shipmentId) != null) {
 				suppliers.get(supplierName).getShipment(shipmentId).addProduct(productName, cost, currentStock, maxStock, lowPercentage);
 			}
 			else { //no matching shipment
-				System.out.println("Shipment id " + id + " does not exist");
+				System.out.println("Shipment id " + shipmentId + " does not exist");
 			}
 		}
 		else { //no matching supplier
@@ -209,11 +209,21 @@ public class Manager {
 			Shipment ship = supplier.getShipment(id);
 			if (ship != null) {
 				HashMap<String, Product> items = ship.getItems(); //all products in shipment
+				int index = 0;
 				Product existingProduct; //the product info that is already in inventory
 				for (Product item : items.values()) {
 					if (inventory.get(item.getName()) != null) { //already exists in inventory
 						existingProduct = inventory.get(item); 
 						existingProduct.setCurrentStock(existingProduct.getCurrentStock() + item.getCurrentStock());
+						index = 0;
+						inventoryStockOrder.remove(item.getName());
+						for (int i = 0; i < inventoryStockOrder.size() - 1; i++) { //stock percentage order
+							if (existingProduct.getStockPercentage() > inventory.get(inventoryStockOrder.get(i)).getStockPercentage())
+								index++;
+							else
+								break;
+						    }
+						    inventoryStockOrder.add(index, existingProduct.getName());
 						inventory.put (item.getName(), existingProduct);
 					}
 					else { //new product not yet in inventory
