@@ -44,11 +44,11 @@ public class Sale {
         }
         return total;
     }
-    public void addItem(Product item) {
-        if (productsSold.containsKey(item))
-            productsSold.put(item, productsSold.get(item)+1);
+    public void addItem(Product item, int numSold) {
+        if (productsSold.get(item) != null)
+            productsSold.put(item, productsSold.get(item)+numSold);
         else
-            productsSold.put(item, 1);
+            productsSold.put(item, numSold);
     }
     //decrements the amount of that product sold in map by numItems
     //completely removes the item if the amount falls below 0
