@@ -959,18 +959,23 @@ public class Manager {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.removeShipment(id, supplierName);
                                   }else if (shipmentChoice == 5) {
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalMonth: ");
                                       int arrivalMonth = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalDay: ");
                                       int arrivalDay = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalYear: ");
                                       int arrivalYear = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
@@ -1040,6 +1045,7 @@ public class Manager {
                                       String last = scanner.nextLine();
                                       System.out.print("enter ID: ");
                                       int id = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter salary: ");
                                       double salary = scanner.nextDouble();
                                       scanner.nextLine();
@@ -1074,26 +1080,30 @@ public class Manager {
                                   scanner.nextLine();
       
                                   if (productChoice == 1) {
-                                      manager.generateLowStockReport();
+                                      System.out.print(manager.generateLowStockReport());
                                   } else if (productChoice == 2) {
                                       System.out.print("enter product name: ");
                                       String productName = scanner.nextLine();
                                       manager.searchInventory(productName);
-                                  } /*else if (productChoice == 3) {
-                                      manager.displayInventory();
+                                  } else if (productChoice == 3) {
+                                      manager.displayInventory(1);
                                       
-                                 } */else if (productChoice == 4) {
+                                 } else if (productChoice == 4) {
                                       //add product
                                       System.out.print("enter name: ");
                                       String productName = scanner.nextLine();
                                       System.out.print("enter cost: ");
                                       double cost = scanner.nextDouble();
+                                      scanner.nextLine();
                                       System.out.print("enter currentStock: ");
                                       int currentStock = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter maxStock: ");
                                       int maxStock = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter lowPercentage: ");
                                       int lowPercentage = scanner.nextInt();
+                                      scanner.nextLine();
                                       manager.addProduct(productName, cost, currentStock, maxStock, lowPercentage);
                                   }else if (productChoice == 5) {
                                       //remove shipment
@@ -1124,10 +1134,13 @@ public class Manager {
                                   if (saleChoice == 1) {
                                       System.out.print("enter dayOfSale: ");
                                       int dayOfSale = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter monthOfSale: ");
                                       int monthOfSale = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter yearOfSale: ");
                                       int yearOfSale = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter cashier first: ");
                                       String cashierFirst = scanner.nextLine();
                                       System.out.print("enter cashier last: ");
