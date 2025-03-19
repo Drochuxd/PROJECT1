@@ -97,6 +97,7 @@ public class Manager {
     public void addShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
         if (suppliers.get(supplierName) != null) {
            suppliers.get(supplierName).addShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+		   System.out.println("Shipment with id " + id + " was succesfully added");
        }else {
 			   System.out.println(supplierName + " does not exist");
        }
@@ -159,7 +160,7 @@ public class Manager {
 			for (Shipment ship : supplier.getAllShipments().values()) {
 				result += "Shipment ID " + ship.getIdNumber() + " arrives at " + ship.arrivalDateToStr() + "\n";
 			}
-			result += "----------------------------------";
+			result += "----------------------------------\n";
 		}
 		return result; 
     }
@@ -686,12 +687,14 @@ public class Manager {
 	public void addSupplier(String name) {
 		if (suppliers.get(name) == null) {
 			suppliers.put(name, new Supplier(name));
+			System.out.println("supplier " + name + "succesfully added");
 		}
 		else {
 			System.out.print("this name already exists, would you like to overwrite? **doing so will erase all data associated with this supplier** [y/n]: ");
 			String input = scan.nextLine();
 			if (input.equals("y")) {
 				suppliers.put(name, new Supplier(name));
+				System.out.println("supplier " + name + " was succesfully overwritten");
 			}
 			else {
 				System.out.println("addition of supplier was not successful"); 
@@ -706,6 +709,7 @@ public class Manager {
 			suppliers.remove(oldName);
 			supplier.setSupplierName(newName);
 			suppliers.put(newName, supplier); 
+			System.out.println("supplier " + oldName + " was succesfully renamed to " + newName);
 		}
 		else {
 			System.out.println(oldName + " was not found");
@@ -734,7 +738,8 @@ public class Manager {
 	public void displaySuppliers() {
 		System.out.printf("%-20s %s\n", "Supplier Names", "Number of Shipments");
 		for (Supplier supplier : suppliers.values()) {
-			System.out.printf("-20s %d", supplier.getSupplierName(), supplier.getAllShipments().size());
+			System.out.printf("%-20s %d", supplier.getSupplierName(), supplier.getAllShipments().size());
+			System.out.println();
 		}
 	}
 	
