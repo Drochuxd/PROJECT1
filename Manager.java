@@ -1089,7 +1089,6 @@ public class Manager {
                                       //add Product To shipment
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
-                                      scanner.nextLine();
                                       System.out.print("enter shipmentId: ");
                                       int shipmentId = scanner.nextInt();
                                       scanner.nextLine();
@@ -1306,16 +1305,6 @@ public class Manager {
                                       String cashierFirst = scanner.nextLine();
                                       System.out.print("enter cashier last: ");
                                       String cashierLast = scanner.nextLine();
-<<<<<<< HEAD
-                                      System.out.print("enter Customer first: ");
-                                      String customerFirst = scanner.nextLine();
-                                      System.out.print("enter Customer last: ");
-                                      String customerLast = scanner.nextLine();
-                                      Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
-                                      Customer makingSale = manager.searchCustomerByName(customerFirst, customerLast).get(0);
-                                      manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
-                                      
-=======
 									  Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
 									  System.out.print("Is the customer registered in system? [y/n]: ");
 									  boolean isRegistered = scanner.nextLine().equals("y");
@@ -1329,8 +1318,7 @@ public class Manager {
 									  }
 									  else {
 										  manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale);
-									  }
->>>>>>> 2c8fcb3 (sale adjustment, bug fixes)
+                                }
                                  } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();
