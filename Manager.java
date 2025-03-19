@@ -946,13 +946,13 @@ public class Manager {
                                        System.out.println("3. view upcoming shipments by year");
                                        int dateChoice = scanner.nextInt();
                                        scanner.nextLine();
-                                       if (dateChoice = 1){
+                                       if (dateChoice == 1){
                                           System.out.println("----------------------------------"); 
                                           System.out.print(manager.getUpcomingShipments("day"));}
-                                       else if (dateChoice = 2){
+                                       else if (dateChoice == 2){
                                           System.out.println("----------------------------------"); 
                                           System.out.print(manager.getUpcomingShipments("month"));}
-                                       else if (dateChoice = 3){
+                                       else if (dateChoice == 3){
                                           System.out.println("----------------------------------"); 
                                           System.out.print(manager.getUpcomingShipments("year"));}
                                   }
@@ -1110,7 +1110,7 @@ public class Manager {
                                   } else if (productChoice == 2) {
                                       System.out.print("enter product name: ");
                                       String productName = scanner.nextLine();
-                                      product found = manager.searchInventory(productName);
+                                      Product found = manager.searchInventory(productName);
                                       
                                   } else if (productChoice == 3) {
                                       System.out.println("\n display inventory menu ");
@@ -1121,19 +1121,19 @@ public class Manager {
                                        System.out.println("5. display inventory percentage stock descending");
                                        int displayChoice = scanner.nextInt();
                                        scanner.nextLine();
-                                       if (displayChoice = 1){
+                                       if (displayChoice == 1){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(1);}
-                                       else if (displayChoice = 2){
+                                       else if (displayChoice == 2){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(2);}
-                                       else if (displayChoice = 3){
+                                       else if (displayChoice == 3){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(3);}
-                                       else if (displayChoice = 4){
+                                       else if (displayChoice == 4){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(4);}
-                                       else if (displayChoice = 5){
+                                       else if (displayChoice == 5){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(5);}
                                        
