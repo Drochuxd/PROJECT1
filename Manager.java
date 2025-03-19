@@ -976,13 +976,15 @@ public class Manager {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
                                   System.out.println("2. view upcoming shipments by date");
-                                  System.out.println("3. receive shipment");
-                                  System.out.println("4. add shipment");
-                                  System.out.println("5. remove shipment");
-                                  System.out.println("6. update shipment");
-                                  System.out.println("7. add Product To Shipment");
-                                  System.out.println("8. add new Product To Shipment");
-                                  System.out.println("9. back to main menu");
+                                  System.out.println("3. view upcoming shipments");
+                                  System.out.println("4. view upcoming shipments by date");
+                                  System.out.println("5. receive shipment");
+                                  System.out.println("6. add shipment");
+                                  System.out.println("7. remove shipment");
+                                  System.out.println("8. update shipment");
+                                  System.out.println("9. add Product To Shipment");
+                                  System.out.println("10. add new Product To Shipment");
+                                  System.out.println("11. back to main menu");
                                   System.out.print("choose an option: ");
       
                                   int shipmentChoice = scanner.nextInt();
@@ -1007,15 +1009,26 @@ public class Manager {
                                        else if (dateChoice == 3){
                                           System.out.println("----------------------------------"); 
                                           System.out.print(manager.getUpcomingShipments("year"));}
+                                  }else if (shipmentChoice == 3) {
+                                      System.out.print("enter supplier name: ");
+                                      String supplierName = scanner.nextLine();
+                                      System.out.print("enter shipment ID: ");
+                                      int id = scanner.nextInt();
+                                      scanner.nextLine();
+                                      System.out.println(manager.peekShipment(supplierName, id));
+                                  } else if (shipmentChoice == 4) {
+                                      System.out.print("enter supplier name: ");
+                                      String supplierName = scanner.nextLine();
+                                      System.out.println(manager.peekShipments(supplierName));
                                   }
-                                  else if (shipmentChoice == 3) {
+                                  else if (shipmentChoice == 5) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
                                       System.out.print("enter shipment ID: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
                                       System.out.println(manager.receiveShipment(supplierName, id));
-                                  } else if (shipmentChoice == 4) {
+                                  } else if (shipmentChoice == 6) {
                                       //add shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -1033,7 +1046,7 @@ public class Manager {
                                       String supplierName = scanner.nextLine();
 
                                       manager.addShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName);
-                                  }else if (shipmentChoice == 5) {
+                                  }else if (shipmentChoice == 7) {
                                       //remove shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
@@ -1041,7 +1054,7 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.removeShipment(id, supplierName);
-                                  }else if (shipmentChoice == 6) {
+                                  }else if (shipmentChoice == 8) {
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
                                       scanner.nextLine();
@@ -1057,7 +1070,7 @@ public class Manager {
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
                                       manager.updateShipment(id, arrivalMonth, arrivalDay, arrivalYear, supplierName );
-                                  }else if (shipmentChoice == 7) {
+                                  }else if (shipmentChoice == 9) {
                                       //add Product To shipment
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
@@ -1073,7 +1086,7 @@ public class Manager {
                                       int numberOfItems = scanner.nextInt();
                                       scanner.nextLine();
                                       manager.addProductToShipment(supplierName, shipmentId, shipItem, numberOfItems);
-                                  }else if (shipmentChoice == 8) {
+                                  }else if (shipmentChoice == 10) {
                                       //add Product To shipment
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
@@ -1096,7 +1109,7 @@ public class Manager {
                                       int lowPercentage = scanner.nextInt();
                                       scanner.nextLine();
                                       manager.addProductToShipment(supplierName, shipmentId, productName, cost, currentStock, maxStock, lowPercentage);
-                                  }else if (shipmentChoice == 9) {
+                                  }else if (shipmentChoice == 11) {
                                       break;
                                  
                                   } else {
@@ -1301,6 +1314,7 @@ public class Manager {
                                       Cashier managingSale = manager.searchCashierByName(cashierFirst, cashierLast).get(0);
                                       Customer makingSale = manager.searchCustomerByName(customerFirst, customerLast).get(0);
                                       manager.addSale(dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
+                                      
                                  } if (saleChoice == 2) {
                                       System.out.print("enter timeframe day month year: ");
                                       String timeframe = scanner.nextLine();
