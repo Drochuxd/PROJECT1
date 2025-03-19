@@ -928,7 +928,8 @@ public class Manager {
                                   scanner.nextLine();
       
                                   if (shipmentChoice == 1) {
-                                     manager.getUpcomingShipments();
+                                    System.out.println("----------------------------------"); 
+                                    System.out.print(manager.getUpcomingShipments());
                                   } else if (shipmentChoice == 2) {
                                       System.out.print("enter supplier name: ");
                                       String supplierName = scanner.nextLine();
@@ -940,12 +941,16 @@ public class Manager {
                                       //add shipment
                                       System.out.print("enter id: ");
                                       int id = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalMonth: ");
                                       int arrivalMonth = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalDay: ");
                                       int arrivalDay = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter arrivalYear: ");
                                       int arrivalYear = scanner.nextInt();
+                                      scanner.nextLine();
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
 
