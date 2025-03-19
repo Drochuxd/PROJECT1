@@ -1390,7 +1390,7 @@ public class Manager {
                       }
                   } catch (Exception e) {
                       System.out.println("OH NO! something went wrong :/ (enter a character to go back to menu)");
-					  e.printStackTrace();
+					  //e.printStackTrace();
                       scanner.nextLine(); // Clear invalid input
                   }
               }
