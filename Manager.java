@@ -976,8 +976,8 @@ public class Manager {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
                                   System.out.println("2. view upcoming shipments by date");
-                                  System.out.println("3. view upcoming shipments");
-                                  System.out.println("4. view upcoming shipments by date");
+                                  System.out.println("3. view upcoming shipment products");
+                                  System.out.println("4. view upcoming shipments and their products");
                                   System.out.println("5. receive shipment");
                                   System.out.println("6. add shipment");
                                   System.out.println("7. remove shipment");
@@ -1074,14 +1074,12 @@ public class Manager {
                                       //add Product To shipment
                                       System.out.print("enter supplierName: ");
                                       String supplierName = scanner.nextLine();
-                                      scanner.nextLine();
                                       System.out.print("enter shipmentId: ");
                                       int shipmentId = scanner.nextInt();
                                       scanner.nextLine();
                                       System.out.print("enter item: ");
                                       String item = scanner.nextLine();
                                       Product shipItem = manager.searchInventory(item);
-                                      scanner.nextLine();
                                       System.out.print("enter numberOfItems: ");
                                       int numberOfItems = scanner.nextInt();
                                       scanner.nextLine();
