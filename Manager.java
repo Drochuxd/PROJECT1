@@ -868,15 +868,15 @@ public class Manager {
               while(month>12 || month<1){
                   System.out.print("enter valid month: ");
                   month = scanner.nextInt();
-                  manager.setCurrentMonth(month);
                }
+               manager.setCurrentMonth(month);
               System.out.print("enter day: ");
               int day = scanner.nextInt();
               while(day>manager.getMaxDay()||day<1){
                   System.out.print("enter valid day: ");
                   day = scanner.nextInt();
-                  manager.setCurrentDay(day);
               }
+              manager.setCurrentDay(day);
               System.out.print("enter year: ");
               int year = scanner.nextInt();
               manager.setCurrentYear(year);
