@@ -336,6 +336,7 @@ public class Manager {
                   break;
             }
         }
+		System.out.println("successfully added product " + productName);
     }
     public void removeProduct(String productName) {
         if (inventory.get(productName) != null) {
@@ -561,13 +562,13 @@ public class Manager {
     }
 	
     public void removeCashier(int id) {
-        try {
-            cashiers.remove(id);
-            System.out.println("Succesfully removed Cashier with id " + id);
-        }
-        catch(Exception e) {
-            System.out.println("Unable to remove Cashier with id " + id);
-        }
+        if (cashiers.get(id) != null) {
+			cashiers.remove(id);
+			System.out.println("Successfully removed Cashier with id " + id);
+		}
+		else {
+			System.out.println("Unable to remove Cashier with id " + id);
+		}
     }
 
     public ArrayList<Cashier> searchCashierByName(String first, String last) {
@@ -629,13 +630,13 @@ public class Manager {
     }
 
     public void removeCustomer(int id) {
-        try {
-            customers.remove(id);
-            System.out.println("Succesfully removed Customer with id " + id);
-        }
-        catch(Exception e) {
-            System.out.println("Unable to remove Customer with id " + id);
-        }
+        if (customers.get(id) != null) {
+			customers.remove(id);
+			System.out.println("Successfully removed Customer with id " + id);
+		}
+		else {
+			System.out.println("Unable to remove Customer with id " + id);
+		}
     }
 
     public ArrayList<Customer> searchCustomerByName(String first, String last) {
@@ -731,7 +732,7 @@ public class Manager {
 	}
 	
 	public void displaySuppliers() {
-		System.out.printf("%-20s %s", "Supplier Names", "Number of Shipments");
+		System.out.printf("%-20s %s\n", "Supplier Names", "Number of Shipments");
 		for (Supplier supplier : suppliers.values()) {
 			System.out.printf("-20s %d", supplier.getSupplierName(), supplier.getAllShipments().size());
 		}
@@ -865,21 +866,21 @@ public class Manager {
     public static void main (String[] args) {
         Scanner scanner = new Scanner(System.in);
               Manager manager = new Manager(-1, -1, -1);
-              System.out.print("enter month: ");
+              System.out.print("enter month (mm): ");
               int month = scanner.nextInt();
               while(month>12 || month<1){
-                  System.out.print("enter valid month: ");
+                  System.out.print("enter valid month (mm): ");
                   month = scanner.nextInt();
                }
                manager.setCurrentMonth(month);
-              System.out.print("enter day: ");
+              System.out.print("enter day (dd): ");
               int day = scanner.nextInt();
               while(day>manager.getMaxDay()||day<1){
-                  System.out.print("enter valid day: ");
+                  System.out.print("enter valid day (dd): ");
                   day = scanner.nextInt();
               }
               manager.setCurrentDay(day);
-              System.out.print("enter year: ");
+              System.out.print("enter year (yyyy): ");
               int year = scanner.nextInt();
               manager.setCurrentYear(year);
       
@@ -902,7 +903,7 @@ public class Manager {
       
                       switch (choice) {
                           case 1: // Date  
-                          System.out.print(manager.currentDateToStr());
+                          System.out.print("Today is " + manager.currentDateToStr());
                               break;
                           case 2: // End Day Menu
                               System.out.println("\nEnd Day menu ");
@@ -1007,17 +1008,17 @@ public class Manager {
                                       String first = scanner.nextLine();
                                       System.out.print("enter last name: ");
                                       String last = scanner.nextLine();
-                                      System.out.print("enter rewards number: ");
-                                      int rewards = scanner.nextInt();
+                                      System.out.print("enter customer id: ");
+                                      int customerId = scanner.nextInt();
                                       scanner.nextLine();
                                       System.out.print("enter phone number: ");
                                       String phone = scanner.nextLine();
-                                      manager.addCustomer(first, last, rewards, phone);
+                                      manager.addCustomer(first, last, customerId, phone);
                                   } else if (customerChoice == 2) {
-                                      System.out.print("enter rewards number: ");
-                                      int rewards = scanner.nextInt();
+                                      System.out.print("enter id number: ");
+                                      int customerId = scanner.nextInt();
                                       scanner.nextLine();
-                                      manager.removeCustomer(rewards);
+                                      manager.removeCustomer(customerId);
                                   } else if (customerChoice == 3) {
                                       manager.displayCustomers();
                                   } else if (customerChoice == 4) {
@@ -1071,10 +1072,10 @@ public class Manager {
                               while (true) {
                                   System.out.println("\n product menu ");
                                   System.out.println("1. generate low stock report");
-                                  System.out.println("2. search inventory");
+                                  System.out.println("2. search inventory for product");
                                   System.out.println("3. display inventory");
-                                  System.out.println("4. add inventory");
-                                  System.out.println("5. remove inventory");
+                                  System.out.println("4. add product to inventory");
+                                  System.out.println("5. remove product from inventory");
                                   System.out.println("6. back to main menu");
                                   System.out.print("choose an option: ");
       
