@@ -238,31 +238,31 @@ public class Manager {
 			case 1: //alphabetical order
 				for (int i = 0; i < inventoryAlphabetOrder.size(); i++) {
 					curProduct = inventory.get(inventoryAlphabetOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 2: //price descending
 				for (int i = inventoryPriceOrder.size()-1; i >= 0; i--) {
 					curProduct = inventory.get(inventoryPriceOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 3: //price ascending
 				for (int i = 0; i < inventoryPriceOrder.size(); i++) {
 					curProduct = inventory.get(inventoryPriceOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 4: //percentage stock descending
 				for (int i = inventoryStockOrder.size()-1; i >= 0; i--) {
 					curProduct = inventory.get(inventoryStockOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			case 5: //percentage stock ascending
 				for (int i = 0; i < inventoryStockOrder.size(); i++) {
 					curProduct = inventory.get(inventoryStockOrder.get(i));
-					System.out.printf("%-15s %.2f %d/%d", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
+					System.out.printf("%-15s cost: $%.2f      stock: %d/%d\n", curProduct.getName(), curProduct.getCost(), curProduct.getCurrentStock(), curProduct.getMaxStock());
 				}
 				break;
 			default:
@@ -308,6 +308,7 @@ public class Manager {
                   else
                      break;
                }
+			   inventoryAlphabetOrder.add(index, productName);
             }
         }
         else {
@@ -336,6 +337,7 @@ public class Manager {
                else
                   break;
             }
+			inventoryAlphabetOrder.add(index, productName);
         }
 		System.out.println("successfully added product " + productName);
     }
@@ -880,7 +882,7 @@ public class Manager {
                manager.setCurrentMonth(month);
               System.out.print("enter day (dd): ");
               int day = scanner.nextInt();
-              while(day>manager.getMaxDay()||day<1){
+              while(day > manager.getMaxDay()||day<1){
                   System.out.print("enter valid day (dd): ");
                   day = scanner.nextInt();
               }
@@ -893,7 +895,7 @@ public class Manager {
                   try {
                       System.out.println("\n Management Menu ");
                       System.out.println("1. Date");
-                      System.out.println("2. EndDay");
+                      System.out.println("2. End Day");
                       System.out.println("3. Shipment");
                       System.out.println("4. Customer");
                       System.out.println("5. Cashier");
@@ -1111,6 +1113,15 @@ public class Manager {
                                       System.out.print("enter product name: ");
                                       String productName = scanner.nextLine();
                                       Product found = manager.searchInventory(productName);
+									  if (found == null) {
+										  System.out.println("Product with name " + productName + " was not found");
+									  }
+									  else {
+										  System.out.println();
+										  System.out.println("Product Name: " + productName);
+										  System.out.printf("Cost: $%.2f\n", found.getCost());
+										  System.out.printf("Stock: %d out of %d\n", found.getCurrentStock(), found.getMaxStock());
+									  }
                                       
                                   } else if (productChoice == 3) {
                                       System.out.println("\n display inventory menu ");
@@ -1136,8 +1147,6 @@ public class Manager {
                                        else if (displayChoice == 5){
                                           System.out.println("----------------------------------"); 
                                           manager.displayInventory(5);}
-                                       
-                                     
                                       
                                  } else if (productChoice == 4) {
                                       //add product
@@ -1272,7 +1281,8 @@ public class Manager {
                               System.out.println("Invalid option. Please enter a number between 1 and 9.");
                       }
                   } catch (Exception e) {
-                      System.out.println("Invalid input! Please enter a valid number.");
+                      System.out.println("OH NO! something went wrong :/ (enter a character to go back to menu)");
+					  e.printStackTrace();
                       scanner.nextLine(); // Clear invalid input
                   }
               }
