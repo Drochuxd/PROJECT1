@@ -110,8 +110,46 @@ public class Manager {
     
     //update a shipment
     public void updateShipment(int id, int arrivalMonth, int arrivalDay, int arrivalYear, String supplierName) {
-        suppliers.get(supplierName).updateShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+        if (suppliers.get(supplierName) == null) {
+			System.out.println("supplier " + supplierName + " does not exist");
+			return;
+		}
+		else if (suppliers.get(supplierName).getShipment(id) == null) {
+			System.out.println("shipment id " + id + " does not exist");
+			return;
+		}
+		suppliers.get(supplierName).updateShipment(id, arrivalMonth, arrivalDay, arrivalYear);
+		System.out.println("Shipment id " + id + " from supplier " + supplierName + " was succesfully updated");
     }
+	
+	public void addProductToShipment(String supplierName, int shipmentId, Product item, int numberOfItems) { //if item already exists
+		if (suppliers.get(supplierName) != null) {
+			if (suppliers.get(supplierName).getShipment(shipmentId)) {
+				suppliers.get(supplierName).getShipment(shipmentId).addProduct(item.getName(), item.getCost(), numberOfItems, item.getMaxStock(), item.getLowPercentage());
+			}
+			else { //no matching shipment
+				System.out.println("Shipment id " + id + " does not exist");
+			}
+		}
+		else { //no matching supplier
+			System.out.println("Supplier " + supplierName + " was not found"); 
+		}
+	}
+	
+	public void addProductToShipment(String supplierName, int shipmentId, String productName, double cost, int currentStock, int maxStock, int lowPercentage) { //if item does not yet exist
+		Product newItem = new Product (productName, cost, currentStock, maxStock, lowPercentage);
+		if (suppliers.get(supplierName) != null) {
+			if (suppliers.get(supplierName).getShipment(shipmentId)) {
+				suppliers.get(supplierName).getShipment(shipmentId).addProduct(productName, cost, currentStock, maxStock, lowPercentage);
+			}
+			else { //no matching shipment
+				System.out.println("Shipment id " + id + " does not exist");
+			}
+		}
+		else { //no matching supplier
+			System.out.println("Supplier " + supplierName + " was not found"); 
+		}
+	}
     
     //returns upcoming shipments within a certain timeframe
     public String getUpcomingShipments(String timeframe) {
@@ -179,7 +217,7 @@ public class Manager {
 						inventory.put (item.getName(), existingProduct);
 					}
 					else { //new product not yet in inventory
-						inventory.put (item.getName(), item);
+						this.addProduct(item.getName(), item.getCost(), item.getCurrentStock(), item.getMaxStock(), item.getLowPercentage());
 					}
 					output += "adding product " + item.getName() + "... new stock is now " + inventory.get(item.getName()).getCurrentStock() + "\n";
 				}
@@ -927,7 +965,7 @@ public class Manager {
                               while (true) {
                                   System.out.println("\n shipment menu ");
                                   System.out.println("1. view upcoming shipments");
-                                  System.out.println("2. view upcoming shipments buy date");
+                                  System.out.println("2. view upcoming shipments by date");
                                   System.out.println("3. receive shipment");
                                   System.out.println("4. add shipment");
                                   System.out.println("5. remove shipment");
@@ -1129,7 +1167,7 @@ public class Manager {
                                        System.out.println("2. display inventory descending");
                                        System.out.println("3. display inventory ascending");
                                        System.out.println("4. display inventory percentage stock descending");
-                                       System.out.println("5. display inventory percentage stock descending");
+                                       System.out.println("5. display inventory percentage stock ascending");
                                        int displayChoice = scanner.nextInt();
                                        scanner.nextLine();
                                        if (displayChoice == 1){
