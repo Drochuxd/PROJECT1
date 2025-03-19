@@ -742,6 +742,7 @@ public class Manager {
 		makingSale.incrementPurchase();
 		System.out.print("enter id number for new sale: ");
 		int idNumber = scan.nextInt();
+        scan.nextLine();
 		Sale newSale = new Sale (idNumber, dayOfSale, monthOfSale, yearOfSale, managingSale, makingSale);
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
@@ -767,6 +768,7 @@ public class Manager {
     public void addSale(int dayOfSale, int monthOfSale, int yearOfSale, Cashier managingSale) {
         System.out.print("enter id number for new sale: ");
 		int idNumber = scan.nextInt();
+        scan.nextLine();
 		Sale newSale = new Sale (idNumber, dayOfSale, monthOfSale, yearOfSale, managingSale);
         String input = "";
         System.out.print("enter product name w/ number sold in the form name:number (or q to quit): ");
